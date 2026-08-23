@@ -415,45 +415,134 @@ function typewriterEffect(element) {
 }
 
 // ===== 残账棋盘密码：ledger.html =====
-var LEDGER_GRID = [
-    ['渡', '口', '莫', '回', '头'],
-    ['莫', '问', '归', '处', '安'],
-    ['禁', '封', '渡', '夜', '中'],
-    ['元', '子', '沉', '即', '槐'],
-    ['村', '火', '水', '书', '然']
+// 答案固定为「渡口莫回头」，但方格内容与朱笔坐标每次都会随机刷新
+var LEDGER_ANSWER = ['渡', '口', '莫', '回', '头'];
+var LEDGER_DECOY_POOL = [
+    '莫', '问', '归', '处', '安', '禁', '封', '渡', '夜', '中',
+    '元', '子', '沉', '即', '槐', '村', '火', '水', '书', '然',
+    '鬼', '魂', '船', '灯', '幡', '纸', '香', '烛', '影', '岸'
 ];
+var ledgerRealCoords = [];   // 朱笔圈定的坐标（按答案顺序），如 ['32','41',...]
+var ledgerGrid = [];          // 当前 25 格内容（扁平数组，行优先）
 
-function renderLedgerGrid() {
+function shuffleArray(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+    }
+    return arr;
+}
+
+function coordToIndex(rc) {
+    var r = parseInt(rc.charAt(0), 10) - 1;
+    var c = parseInt(rc.charAt(1), 10) - 1;
+    return r * 5 + c;
+}
+
+function randomCoord() {
+    var r = 1 + Math.floor(Math.random() * 5);
+    var c = 1 + Math.floor(Math.random() * 5);
+    return '' + r + c;
+}
+
+function generateUniqueCoords(n) {
+    var set = [];
+    while (set.length < n) {
+        var rc = randomCoord();
+        if (set.indexOf(rc) === -1) set.push(rc);
+    }
+    return set;
+}
+
+function generateUniqueCoordsExcluding(n, excludeArr) {
+    var set = [];
+    while (set.length < n) {
+        var rc = randomCoord();
+        if (set.indexOf(rc) === -1 && excludeArr.indexOf(rc) === -1) set.push(rc);
+    }
+    return set;
+}
+
+// 生成本次谜面的方格与名册数字（每次调用都会重新随机）
+function renderLedgerPuzzle() {
     var g = document.getElementById('ledger-grid');
+    var rBox = document.getElementById('ledger-roster');
     if (!g) return;
+
+    // 1) 随机选 5 个不重复坐标作为朱笔圈定者，对应答案字句
+    ledgerRealCoords = generateUniqueCoords(5);
+    var grid = new Array(25).fill(null);
+    var used = {};
+    for (var i = 0; i < 5; i++) {
+        var idx = coordToIndex(ledgerRealCoords[i]);
+        grid[idx] = LEDGER_ANSWER[i];
+        used[idx] = true;
+    }
+    // 2) 其余格子用干扰字随机填充（打乱后依次填入）
+    var pool = LEDGER_DECOY_POOL.slice();
+    while (pool.length < 25) pool = pool.concat(LEDGER_DECOY_POOL);
+    shuffleArray(pool);
+    var d = 0;
+    for (var p = 0; p < 25; p++) {
+        if (!used[p]) grid[p] = pool[d++];
+    }
+    ledgerGrid = grid;
+
+    // 3) 渲染方格
     var html = '<table class="ledger-grid-table">';
     html += '<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>';
-    for (var r = 0; r < 5; r++) {
-        html += '<tr><th class="lg-row">' + (r + 1) + '</th>';
-        for (var c = 0; c < 5; c++) {
-            html += '<td>' + LEDGER_GRID[r][c] + '</td>';
+    for (var row = 0; row < 5; row++) {
+        html += '<tr><th class="lg-row">' + (row + 1) + '</th>';
+        for (var col = 0; col < 5; col++) {
+            html += '<td>' + grid[row * 5 + col] + '</td>';
         }
         html += '</tr>';
     }
     html += '</table>';
     g.innerHTML = html;
+
+    // 4) 渲染名册数字：朱笔坐标按序散布于干扰数中，每次位置不同
+    if (rBox) {
+        var slots = [];
+        while (slots.length < 5) {
+            var s = Math.floor(Math.random() * 10);
+            if (slots.indexOf(s) === -1) slots.push(s);
+        }
+        slots.sort(function (a, b) { return a - b; });
+        var isReal = new Array(10).fill(false);
+        slots.forEach(function (sl) { isReal[sl] = true; });
+        var fake = generateUniqueCoordsExcluding(5, ledgerRealCoords);
+        var fi = 0, ri = 0, rb = '';
+        for (var k = 0; k < 10; k++) {
+            if (isReal[k]) {
+                rb += '<span class="ledger-real">' + ledgerRealCoords[ri++] + '</span> ';
+            } else {
+                rb += '<span class="ledger-fake">' + fake[fi++] + '</span> ';
+            }
+        }
+        rBox.innerHTML = rb;
+    }
+}
+
+// 兼容旧调用名
+function renderLedgerGrid() {
+    renderLedgerPuzzle();
 }
 
 function checkLedgerAnswer() {
-    // 只取朱笔圈定者（.ledger-real），黑底干扰项忽略
-    var els = document.querySelectorAll('#ledger-roster .ledger-real');
-    var answer = '';
-    els.forEach(function(el) {
-        var p = el.textContent.trim();
-        var r = parseInt(p.charAt(0), 10) - 1;
-        var c = parseInt(p.charAt(1), 10) - 1;
-        if (LEDGER_GRID[r] && LEDGER_GRID[r][c]) answer += LEDGER_GRID[r][c];
-    });
-
     var input = document.getElementById('ledger-answer');
     var msg = document.getElementById('ledger-message');
     var hidden = document.getElementById('ledger-hidden-link');
     if (!input || !msg) return;
+
+    // 根据当前谜面实时计算答案（不硬编码）
+    var answer = '';
+    for (var i = 0; i < ledgerRealCoords.length; i++) {
+        var idx = coordToIndex(ledgerRealCoords[i]);
+        answer += ledgerGrid[idx];
+    }
 
     var guess = input.value.replace(/\s+/g, '');
     if (guess === answer && guess !== '') {
@@ -466,9 +555,17 @@ function checkLedgerAnswer() {
         input.disabled = true;
     } else {
         msg.style.color = 'var(--color-blood-bright)';
-        msg.textContent = '数字对不上。只取朱笔圈定的那些。';
+        msg.textContent = '数字对不上。只取朱笔圈定的那些——方格与名册已重新打乱。';
         input.classList.add('shake');
-        setTimeout(function() { input.classList.remove('shake'); }, 500);
+        setTimeout(function () { input.classList.remove('shake'); }, 500);
+        // 回答错误后全盘重新随机刷新
+        setTimeout(function () {
+            renderLedgerPuzzle();
+            if (msg) {
+                msg.style.color = 'var(--color-text-dim)';
+                msg.textContent = '名册已被水渍晕开，重新辨认……（朱笔坐标与方格都已变动）';
+            }
+        }, 900);
     }
 }
 
@@ -549,6 +646,23 @@ function toggleOmenNote() {
     if (note) note.style.display = (note.style.display === 'none' || note.style.display === '') ? 'block' : 'none';
 }
 
+// 卦例表：每次查看都随机排序，避免玩家死记固定顺序
+var TRIGRAM_NAME = {
+    '☰': '乾', '☱': '兑', '☲': '离', '☳': '震',
+    '☴': '巽', '☵': '坎', '☶': '艮', '☷': '坤'
+};
+
+function renderOmenNote() {
+    var box = document.getElementById('omen-gua-list');
+    if (!box) return;
+    var syms = Object.keys(TRIGRAM_NAME);
+    shuffleArray(syms);
+    var parts = syms.map(function (s) {
+        return s + ' ' + TRIGRAM_NAME[s] + ' → ' + (TRIGRAM_CHAR[s] || '');
+    });
+    box.textContent = parts.join('　');
+}
+
 function checkOmenAnswer() {
     var guaWrap = document.getElementById('omen-gua');
     var input = document.getElementById('omen-answer');
@@ -593,6 +707,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initGatedNav();
     if (document.getElementById('ledger-grid')) {
         renderLedgerGrid();
+    }
+    if (document.getElementById('omen-gua-list')) {
+        renderOmenNote();
     }
     if (document.getElementById('mirror-grid')) {
         renderMirror();

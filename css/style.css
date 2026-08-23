@@ -410,6 +410,17 @@ a:hover {
     width: 10%;
 }
 
+.ledger-real {
+    color: var(--color-blood-bright);
+    font-weight: 600;
+}
+
+.ledger-fake {
+    color: var(--color-text-faint);
+    text-decoration: line-through;
+    opacity: 0.45;
+}
+
 /* --- 镜书 --- */
 .mirror-row {
     display: flex;
@@ -450,8 +461,8 @@ a:hover {
 }
 
 .gua-decoy {
-    opacity: 0.35;
-    text-decoration: line-through;
+    color: var(--color-text-faint);
+    opacity: 0.7;
 }
 
 /* --- 仪式交互 --- */
