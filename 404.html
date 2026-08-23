@@ -17,8 +17,12 @@
             <p class="no-indent" style="color: var(--color-text-dim); margin-top: 8px; font-size: 0.9rem;">
                 你走错路了。又或者……路走错你了。
             </p>
-            <div style="margin-top: 40px;">
-                <a href="index.html" class="btn">回到入口</a>
+            <p class="no-indent" id="back-countdown" style="color: var(--color-gold-dim); margin-top: 28px; font-size: 0.9rem; min-height: 1.4em;">
+                档案似乎走失了……将在几秒后把你送回上一个界面。
+            </p>
+            <div style="margin-top: 18px;">
+                <a href="javascript:history.back()" class="btn">现在返回</a>
+                <a href="index.html" class="btn" style="margin-left: 12px;">回到入口</a>
             </div>
             <p class="no-indent" style="color: var(--color-text-faint); font-size: 0.75rem; margin-top: 50px;">
                 提示：真正的入口往往藏在看得见的地方。<br>
@@ -28,5 +32,35 @@
     </div>
 
     <script src="js/arg.js"></script>
+    <script>
+        // 404 页面：5-10 秒后自动返回上一页；无来源则回首页
+        document.addEventListener('DOMContentLoaded', function () {
+            var backUrl = document.referrer;
+            if (!backUrl) backUrl = 'index.html';
+            var wait = 5 + Math.floor(Math.random() * 6); // 5 ~ 10 秒
+            var box = document.getElementById('back-countdown');
+
+            function update(n) {
+                if (box) {
+                    box.textContent = '档案似乎走失了……将在 ' + n + ' 秒后把你送回上一个界面。';
+                }
+            }
+            update(wait);
+
+            var timer = setInterval(function () {
+                wait--;
+                if (wait <= 0) {
+                    clearInterval(timer);
+                    if (document.referrer) {
+                        history.back();
+                    } else {
+                        location.href = backUrl;
+                    }
+                } else {
+                    update(wait);
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

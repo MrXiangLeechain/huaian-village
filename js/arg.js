@@ -663,6 +663,56 @@ function renderOmenNote() {
     box.textContent = parts.join('　');
 }
 
+// 朱砂卦象谜面：两排共 16 个，4 个有效卦随机散布，其余为废卦
+var OMEN_VALID = [
+    { sym: '☰', change: null },   // 真卦 ☰ → 中
+    { sym: '☶', change: 1 },      // 上爻动 → 真卦 ☷ → 元
+    { sym: '☲', change: 1 },      // 上爻动 → 真卦 ☳ → 子
+    { sym: '☴', change: null }    // 真卦 ☴ → 夜
+];
+var OMEN_ALL_SYMBOLS = ['☰', '☱', '☲', '☳', '☴', '☵', '☶', '☷'];
+
+function renderOmenPuzzle() {
+    var box = document.getElementById('omen-gua');
+    if (!box) return;
+
+    // 在 16 个位置中随机选 4 个放置有效卦，按 reading order 排序后对应答案顺序
+    var slots = [];
+    while (slots.length < 4) {
+        var s = Math.floor(Math.random() * 16);
+        if (slots.indexOf(s) === -1) slots.push(s);
+    }
+    slots.sort(function (a, b) { return a - b; });
+
+    var cells = new Array(16).fill(null);
+    slots.forEach(function (slot, i) {
+        cells[slot] = OMEN_VALID[i];
+    });
+
+    // 其余位置用随机八卦符号填充，均标为废卦
+    for (var i = 0; i < 16; i++) {
+        if (!cells[i]) {
+            var sym = OMEN_ALL_SYMBOLS[Math.floor(Math.random() * OMEN_ALL_SYMBOLS.length)];
+            cells[i] = { sym: sym, decoy: true };
+        }
+    }
+
+    // 渲染为两排，每排 8 个
+    var html = '<div class="omen-row">';
+    for (var i = 0; i < 16; i++) {
+        if (i === 8) html += '</div><div class="omen-row">';
+        var c = cells[i];
+        if (c.decoy) {
+            html += '<span class="gua gua-decoy" data-gua="' + c.sym + '">' + c.sym + '</span>';
+        } else {
+            html += '<span class="gua" data-gua="' + c.sym + '"' +
+                (c.change ? ' data-change="' + c.change + '"' : '') + '>' + c.sym + '</span>';
+        }
+    }
+    html += '</div>';
+    box.innerHTML = html;
+}
+
 function checkOmenAnswer() {
     var guaWrap = document.getElementById('omen-gua');
     var input = document.getElementById('omen-answer');
@@ -699,14 +749,54 @@ function checkOmenAnswer() {
         msg.textContent = '卦象有误。先化动爻、再查表、依左序连读——别把相似的卦看混了。';
         input.classList.add('shake');
         setTimeout(function() { input.classList.remove('shake'); }, 500);
+        // 答错后重新打乱卦象位置
+        setTimeout(function () {
+            renderOmenPuzzle();
+            if (msg) {
+                msg.style.color = 'var(--color-text-dim)';
+                msg.textContent = '朱砂褪去又重新聚起，卦象的位置已经变了。';
+            }
+        }, 900);
     }
+}
+
+// ===== 全站随机「迷路」跳转 =====
+// 在非 404 页面点击站内链接时，有一定概率被拽入 404.html；
+// 404 页会等待 5-10 秒后自动返回上一页，强化「档案不稳定」的氛围。
+function initRandom404Jumps() {
+    var JUMP_CHANCE = 0.15;
+    if (/404\.html/.test(location.pathname)) return;
+
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest('a');
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href) return;
+
+        // 不拦截锚点、站外链接、邮件/脚本、404 自身
+        if (href.indexOf('#') === 0) return;
+        if (/^(https?:|mailto:|javascript:)/i.test(href)) return;
+        if (/404\.html/.test(href)) return;
+        // 仅对站内 .html 页面生效
+        if (!/\.html$/.test(href) && href.indexOf('.') !== -1) return;
+
+        if (Math.random() < JUMP_CHANCE) {
+            e.preventDefault();
+            sessionStorage.setItem('yunyin_intended_href', href);
+            location.href = '404.html';
+        }
+    });
 }
 
 // ===== 页面初始化分发 =====
 document.addEventListener('DOMContentLoaded', function() {
     initGatedNav();
+    initRandom404Jumps();
     if (document.getElementById('ledger-grid')) {
         renderLedgerGrid();
+    }
+    if (document.getElementById('omen-gua')) {
+        renderOmenPuzzle();
     }
     if (document.getElementById('omen-gua-list')) {
         renderOmenNote();
