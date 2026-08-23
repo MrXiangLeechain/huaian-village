@@ -135,8 +135,20 @@
             </div>
 
             <div style="text-align: center;">
-                <button class="cipher-submit" onclick="revealArchiveSecret()">解析档案标记</button>
-                <div id="archive-decoded" style="margin-top: 16px; color: var(--color-gold); opacity: 0; transition: opacity 0.8s; font-size: 1.05rem; letter-spacing: 0.2em;"></div>
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                    这些"旧式分类标记"若连起来读，或许是一个词。认得它们的人，自己动手解开。
+                </p>
+                <button class="cipher-submit" style="display: inline-block; margin-top: 12px; font-size: 0.85rem;" onclick="showArchiveMorse()">将该照片的分类标记按顺序排列（仅显示符号）</button>
+                <div id="archive-morse" style="margin-top: 12px; font-family: var(--font-mono); color: var(--color-gold-dim); opacity: 0; transition: opacity 0.6s; letter-spacing: 0.18em;"></div>
+
+                <div style="margin-top: 24px;">
+                    <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你破译出的词（英文，大小写不限）：</label>
+                    <input type="text" class="cipher-input" id="archive-answer" placeholder="在此写下你破译的词..." autocomplete="off" style="font-size: 1rem;">
+                    <button class="cipher-submit" style="margin-top: 16px;" onclick="checkArchiveAnswer()">提交破译结果</button>
+                    <div class="cipher-message" id="archive-message" style="margin-top: 14px;"></div>
+                </div>
+                <div id="archive-decoded" style="margin-top: 8px; color: var(--color-gold); opacity: 0; transition: opacity 0.8s; font-size: 1.05rem; letter-spacing: 0.2em;"></div>
+
                 <div style="margin-top: 20px; opacity: 0.01; transition: all 1s; pointer-events: none;" id="archive-hidden-link">
                     <a href="letters.html" class="btn">沈墨留下的信件 →</a>
                 </div>

@@ -59,13 +59,10 @@ function decodeMorse(morseStr) {
     return result.join(' ');
 }
 
-function revealArchiveSecret() {
-    // 摩斯码以"旧式分类标记"形式显示在照片下方
-    // L=.--.. E=. T=- T=- E=. R=.-. S=...  → "LETTERS"
-    var morseMarks = document.querySelectorAll('.card .font-mono, .card [style*="font-mono"]');
+// ===== 档案室：archive.html =====
+// 仅把照片下方的摩斯符号按原始顺序拼出（不翻译），交给玩家自己破译
+function showArchiveMorse() {
     var morseParts = [];
-
-    // 兜底：直接扫描照片卡片中的摩斯符号 div
     var cards = document.querySelectorAll('.card');
     cards.forEach(function(card) {
         var divs = card.querySelectorAll('div');
@@ -77,16 +74,59 @@ function revealArchiveSecret() {
         });
     });
 
-    var morseStr = morseParts.join(' ');
-    var decoded = decodeMorse(morseStr);
-
-    var output = document.getElementById('archive-decoded');
-    if (output) {
-        output.textContent = '解码结果: ' + decoded + '（提示：英文单词，指向某类档案）';
-        output.style.opacity = '1';
+    var out = document.getElementById('archive-morse');
+    if (out) {
+        out.textContent = morseParts.join(' ');
+        out.style.opacity = '1';
     }
+}
 
-    var hidden = document.getElementById('archive-hidden-link');
+// 玩家自行破译后输入，正确才解锁信件入口
+function checkArchiveAnswer() {
+    var input = document.getElementById('archive-answer');
+    var msg = document.getElementById('archive-message');
+    if (!input || !msg) return;
+
+    // 答案由摩斯表对"显示出的符号"自动解出，不硬编码，密文改动则答案自动跟随
+    var morseParts = [];
+    var cards = document.querySelectorAll('.card');
+    cards.forEach(function(card) {
+        var divs = card.querySelectorAll('div');
+        divs.forEach(function(div) {
+            var t = div.textContent.trim();
+            if (/^[.\- ]+$/.test(t) && t.length > 0 && t.length < 8) {
+                morseParts.push(t);
+            }
+        });
+    });
+    var answer = decodeMorse(morseParts.join(' ')).replace(/\s+/g, '');
+
+    var guess = input.value.trim().toUpperCase().replace(/\s+/g, '');
+
+    if (guess === answer && guess !== '') {
+        msg.style.color = 'var(--color-gold)';
+        msg.textContent = '破译正确：L · E · T · T · E · R · S。这些标记指向——信件。';
+        var decoded = document.getElementById('archive-decoded');
+        if (decoded) {
+            decoded.textContent = 'LETTERS';
+            decoded.style.opacity = '1';
+        }
+        var hidden = document.getElementById('archive-hidden-link');
+        if (hidden) {
+            hidden.style.opacity = '1';
+            hidden.style.pointerEvents = 'auto';
+        }
+        input.disabled = true;
+    } else {
+        msg.textContent = '破译有误。再看看那些标记。';
+        input.classList.add('shake');
+        setTimeout(function() { input.classList.remove('shake'); }, 500);
+    }
+}
+
+// ===== 研究项目：projects.html 隐藏入口显形 =====
+function revealProjectsLink() {
+    var hidden = document.getElementById('projects-hidden-link');
     if (hidden) {
         hidden.style.opacity = '1';
         hidden.style.pointerEvents = 'auto';
