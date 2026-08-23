@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究日志 | 云隐文化研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-mark">云</div>
+            <h1 class="site-title">云隐文化研究所</h1>
+            <div class="site-subtitle">内部研究档案系统</div>
+        </header>
+
+        <nav class="nav-bar">
+            <a href="index.html">首页</a>
+            <a href="about.html">关于我们</a>
+            <a href="projects.html">研究项目</a>
+        </nav>
+
+        <section class="fade-in">
+            <h2>沈墨 · 研究日志</h2>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
+                以下为沈墨研究员在槐安村田野调查期间记录的研究日志。部分条目已加密，需输入访问密码方可查阅。
+            </p>
+        </section>
+
+        <!-- 密码输入区 -->
+        <div class="cipher-input-area fade-in-delay-1" id="journal-lock-area">
+            <label>请输入访问密码（项目编号中的数字部分）</label>
+            <input type="text" class="cipher-input" id="journal-password"
+                   placeholder="输入密码..." autocomplete="off">
+            <button class="cipher-submit" onclick="checkJournalPassword()">解锁日志</button>
+            <div class="cipher-message" id="journal-message"></div>
+        </div>
+
+        <!-- 日志条目 -->
+        <div id="journal-unlocked" style="display: none;">
+
+            <div class="journal-entry">
+                <div class="entry-date">2024.03.15 · 晴</div>
+                <div class="entry-title">抵达槐安村</div>
+                <div class="entry-body">
+                    <p>
+                        下午三点抵达槐安村遗址。村庄比想象中更偏僻，从最近的镇子过来需要翻过两座山。GPS信号到这里就断了，只能靠指南针。
+                    </p>
+                    <p>
+                        村子的规模比我预期的要大。粗略估算有七八十栋建筑，虽然都已坍塌或荒废，但格局保存完好。祠堂在村子正中央，是唯一还勉强站着的建筑。
+                    </p>
+                    <p>
+                        祠堂的门楣上有四个字，已经被风雨侵蚀得几乎看不清了。我用手电照了很久，勉强辨认出："槐安永镇"。
+                    </p>
+                    <p>
+                        "永镇"——镇什么？
+                    </p>
+                </div>
+            </div>
+
+            <div class="journal-entry">
+                <div class="entry-date">2024.03.17 · 阴</div>
+                <div class="entry-title">口述资料</div>
+                <div class="entry-body">
+                    <p>
+                        在附近的镇子上找到了一位老人，姓陈，今年八十七岁。她说她年轻时嫁到过槐安村，但后来"出事"后就没再回去过。
+                    </p>
+                    <p>
+                        她说的和档案记录不一样。她说村里的人不是"迁徙"的。她说那天是七月十五，中元节，村里人照例在祠堂祭祖。然后——
+                    </p>
+                    <p>
+                        "然后就没了。一个都没了。"
+                    </p>
+                    <p>
+                        我问她后来有没有回去看过。她突然不说话了，过了很久才说："不敢。那地方不对了。"
+                    </p>
+                    <p>
+                        我追问哪里不对。她看着我，突然说了一句让我脊背发凉的话："你要去的话，记住，先燃香烛，以通阴阳。不然后果自负。"
+                    </p>
+                    <p>
+                        我以为她在说迷信，但她眼神里那种恐惧不像是装的。
+                    </p>
+                </div>
+            </div>
+
+            <div class="journal-entry">
+                <div class="entry-date">2024.03.20 · 雨</div>
+                <div class="entry-title">祠堂内部</div>
+                <div class="entry-body">
+                    <p>
+                        今天终于进了祠堂内部。门没有锁——不是被打开的，是已经烂到没法锁了。
+                    </p>
+                    <p>
+                        里面比我预想的干净。供桌还在，上面的牌位倒了一地。我把牌位翻过来看了看，大多是"王""李""张"这些常见姓氏，年代最早的可追溯到清乾隆年间。
+                    </p>
+                    <p>
+                        但供桌后面有一面墙，上面画着东西。被烟熏得很黑，但仔细看，是一幅壁画。
+                    </p>
+                    <p>
+                        画的是一个圆形的图案，中间是一只眼睛——或者说像眼睛的东西。圆形外围有五道纹路，像是五条河流从中心向外辐射。每条纹路的末端画着不同的东西：一支蜡烛、一面幡、一只纸船、一盏灯、还有一堆……纸钱。
+                    </p>
+                    <p>
+                        我拍了照。壁画下方有一行小字，我用湿布擦了很久才看清：
+                    </p>
+                    <p style="color: var(--color-blood-bright); text-align: center; font-size: 1.1rem; text-indent: 0;">
+                        "五物齐备，次第而燃，方可启门。"
+                    </p>
+                    <p>
+                        启什么门？
+                    </p>
+                </div>
+            </div>
+
+            <div class="journal-entry">
+                <div class="entry-date">2024.03.25 · 阴</div>
+                <div class="entry-title">发现密室</div>
+                <div class="entry-body">
+                    <p>
+                        祠堂的后面有一个暗格，是我在清理壁画墙基的时候偶然发现的。暗格不大，刚好能放进一个木箱。
+                    </p>
+                    <p>
+                        木箱里是一本手抄的册子，纸张已经发黄发脆。封面写着"槐安村志·禁卷"。
+                    </p>
+                    <p>
+                        "禁卷"——我查了方志体例，从来没有"禁卷"这种分类。这不是正经的村志，是村里人私自记录的东西。
+                    </p>
+                    <p>
+                        翻了几页，发现这本"禁卷"记载的不是村史，而是——仪式。详细的、完整的仪式记录。从准备到执行，每一步都有。
+                    </p>
+                    <p>
+                        我的手在发抖。这不像我见过的任何民俗仪式记录。它的语气不像是民俗学家在记录传统，更像是——使用说明。
+                    </p>
+                    <p>
+                        档案室里应该有之前调查组留下的资料。我需要回去查一查。
+                    </p>
+                </div>
+            </div>
+
+            <div class="journal-entry">
+                <div class="entry-date">2024.03.28 · 晴</div>
+                <div class="entry-title">最后的记录</div>
+                <div class="entry-body">
+                    <p>
+                        我不该翻那本禁卷的。
+                    </p>
+                    <p>
+                        昨天夜里，祠堂方向传来声音。不是风声，不是动物。是诵经声。很多人一起诵经的声音。
+                    </p>
+                    <p>
+                        但那个村子已经荒废了三十七年。
+                    </p>
+                    <p>
+                        我去看了一眼。祠堂的门开了。不是被风吹开的——是像有人从里面推开的那样开着。
+                    </p>
+                    <p>
+                        里面的壁画在发光。就是那幅壁画，那个圆形图案，那只眼睛。在黑暗中微微发红光，像是——活的。
+                    </p>
+                    <p>
+                        我不知道我在那里站了多久。等我回过神来，天已经快亮了。我发现自己的手不知什么时候伸向了壁画，指尖几乎要碰到那只"眼睛"。
+                    </p>
+                    <p>
+                        我后退了一步。然后我看到了壁画下方又多了一行字——昨天绝对没有的字：
+                    </p>
+                    <p style="color: var(--color-blood-bright); text-align: center; text-indent: 0;">
+                        "你来了。"
+                    </p>
+                    <p>
+                        我要离开这里。档案室里的东西，我还没来得及全部看完。
+                    </p>
+                    <p>
+                        如果有人看到这些记录，请去查阅档案室。那些照片，那些记录——答案在那里。
+                    </p>
+                    <p style="color: var(--color-gold-dim); text-indent: 0;">
+                        ——沈墨
+                    </p>
+                </div>
+            </div>
+
+            <!-- 档案室入口 -->
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="archive.html" class="btn">前往档案室 →</a>
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <p>云隐文化研究所 © 2015-2024 · 内部档案</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪式 | 未知页面</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header flicker">
+            <div class="logo-mark" style="color: var(--color-blood-bright);">祭</div>
+            <h1 class="site-title glow-text">中元仪式</h1>
+            <div class="site-subtitle">槐安村禁卷 · 第七章全文转录</div>
+        </header>
+
+        <section class="fade-in">
+            <h2>仪式规则</h2>
+            <p>
+                以下五件祭品取自沈墨研究员根据禁卷复原的仪式布置。按照禁卷记载，五物必须"次第而燃"——即依照特定顺序逐一启用。
+            </p>
+            <p>
+                禁卷第七页原文：
+            </p>
+            <div class="warning-box">
+                <p class="no-indent" style="color: var(--color-gold); text-align: center; font-size: 1.05rem; line-height: 2;">
+                    "中元之夜，鬼门启。五物次第：<br>
+                    香烛通阴阳，引魂幡指归途，<br>
+                    纸船渡河，河灯照幽冥，<br>
+                    纸钱安亡灵。次第不可乱，乱则封破。"
+                </p>
+            </div>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.88rem;">
+                提示：正确的顺序已分散在你一路走过的档案之中——日志、信件、档案室、地图、以及沈墨的最终文档。若你仔细读过它们，你已知道答案。
+            </p>
+        </section>
+
+        <!-- 仪式交互区 -->
+        <div class="ritual-area fade-in-delay-1">
+            <h2>祭品陈列</h2>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                依次点击五件祭品，完成仪式。顺序错误将导致仪式失败并重置。
+            </p>
+
+            <div class="ritual-circle">
+                <div class="ritual-item" data-name="香烛" data-idx="0">
+                    <div class="item-icon">🕯️</div>
+                    <div class="item-name">香烛</div>
+                </div>
+                <div class="ritual-item" data-name="引魂幡" data-idx="1">
+                    <div class="item-icon">🎏</div>
+                    <div class="item-name">引魂幡</div>
+                </div>
+                <div class="ritual-item" data-name="纸船" data-idx="2">
+                    <div class="item-icon">⛵</div>
+                    <div class="item-name">纸船</div>
+                </div>
+                <div class="ritual-item" data-name="河灯" data-idx="3">
+                    <div class="item-icon">🏮</div>
+                    <div class="item-name">河灯</div>
+                </div>
+                <div class="ritual-item" data-name="纸钱" data-idx="4">
+                    <div class="item-icon">🪙</div>
+                    <div class="item-name">纸钱</div>
+                </div>
+            </div>
+
+            <!-- 进度指示 -->
+            <div class="ritual-sequence">
+                <div class="sequence-dot"></div>
+                <div class="sequence-dot"></div>
+                <div class="sequence-dot"></div>
+                <div class="sequence-dot"></div>
+                <div class="sequence-dot"></div>
+            </div>
+
+            <div class="ritual-message" id="ritual-message">等待仪式开始...</div>
+
+            <!-- 仪式完成后的入口 -->
+            <div style="opacity: 0.01; transition: all 1.5s; pointer-events: none; margin-top: 30px;" id="ritual-next">
+                <p class="no-indent" style="color: var(--color-blood-bright); font-size: 1rem;">
+                    空气突然变得很冷。你听见远处传来水声——像是很多纸船同时下水。
+                </p>
+                <a href="timeline.html" class="btn">看见真相 →</a>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p style="color: var(--color-blood);">仪式不可逆</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>

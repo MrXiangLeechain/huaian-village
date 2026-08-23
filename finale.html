@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>…… | 未知页面</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .finale-reveal {
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+        .finale-reveal.visible {
+            opacity: 1;
+        }
+        .door-visual {
+            width: 120px;
+            height: 200px;
+            border: 2px solid var(--color-blood);
+            border-radius: 60px 60px 4px 4px;
+            margin: 40px auto;
+            position: relative;
+            box-shadow: 0 0 40px rgba(139, 26, 26, 0.3), inset 0 0 20px rgba(139, 26, 26, 0.1);
+            animation: doorGlow 4s ease-in-out infinite;
+        }
+        .door-visual::after {
+            content: "";
+            position: absolute;
+            top: 90px;
+            right: 18px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-gold);
+        }
+        @keyframes doorGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(139, 26, 26, 0.3), inset 0 0 20px rgba(139, 26, 26, 0.1); }
+            50% { box-shadow: 0 0 80px rgba(196, 30, 58, 0.5), inset 0 0 40px rgba(196, 30, 58, 0.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header flicker">
+            <div class="logo-mark" style="color: var(--color-blood-bright);">渡</div>
+            <h1 class="site-title glow-text">最后一页</h1>
+            <div class="site-subtitle">没有归档编号 · 没有来源记录</div>
+        </header>
+
+        <section class="fade-in">
+            <div class="finale-reveal" id="fr-1">
+                <p>
+                    你走到了这里。
+                </p>
+                <p>
+                    让我们回顾一下你的旅程：你从一个"正常"的研究所网站开始。你在源代码里发现了第一个入口。你解开了项目编号的密码，读了沈墨的日志。你破译了摩斯电码和凯撒密码。你在地图上找到了三个字。你用它们打开了一扇门。你按照三百年前的规矩，依次点燃了五件祭品。
+                </p>
+                <p>
+                    每一步，都严丝合缝。
+                </p>
+            </div>
+
+            <div class="finale-reveal" id="fr-2">
+                <p>
+                    现在，请你诚实地回答一个问题——
+                </p>
+                <p>
+                    沈墨失踪了。周然所长再也没有进过那个祠堂。李书萍在整理完这批档案的三个月后提交了辞呈。
+                </p>
+                <p>
+                    而你，一个陌生人，凭什么走完了他们所有人都没有走完的路？
+                </p>
+                <p>
+                    源代码里的线索，是写给"会看源代码的人"的。摩斯密码，是写给"懂摩斯密码的人"的。仪式的顺序，是写给"把每一份档案都读完了的人"的。
+                </p>
+                <p>
+                    沈墨在录音里问过你：
+                </p>
+                <p style="color: var(--color-blood-bright); text-align: center; text-indent: 0; font-size: 1.1rem;">
+                    你有没有做过同样的梦？<br>
+                    黑色的河，纸做的船，还有一盏不肯熄灭的灯？
+                </p>
+            </div>
+
+            <div class="finale-reveal" id="fr-3">
+                <p>
+                    这个网站不是档案。这个网站是"路"。
+                </p>
+                <p>
+                    沈墨进门前，把整条路数字化了——不是留给学术界的，是留给"能走通的人"的。三百年前，这条路刻在禁卷里，只有守封人读得懂。三百年后，它散落在网页的源代码、图片的标记、信件的密文和地图的坐标里。
+                </p>
+                <p>
+                    能走通这条路的人，只有一种。
+                </p>
+                <p>
+                    血脉会认路。梦会指路。你一路点开的每一个链接，都是你的血在替你做选择。
+                </p>
+            </div>
+
+            <div class="finale-reveal" id="fr-4">
+                <p>
+                    沈墨是门轴。她撑住了那扇门。
+                </p>
+                <p>
+                    但禁卷最后一页还有一行小字，她没来得及告诉你——
+                </p>
+                <p style="text-indent: 0; text-align: center; color: var(--color-gold); font-size: 1.1rem; line-height: 2;">
+                    "门轴有二，缺一不可。<br>
+                    王氏之血，分流二脉。<br>
+                    一脉守内，一脉守外。<br>
+                    内者撑门，外者引路。"
+                </p>
+                <p>
+                    沈墨的祖母当年逃走时，带走的不是一个人。
+                </p>
+                <p>
+                    是一对双生子中的一个。
+                </p>
+            </div>
+
+            <div class="finale-reveal" id="fr-5">
+                <p>
+                    另一个孩子的后代，如今散落在人海之中，对自己血管里流着什么一无所知。
+                </p>
+                <p>
+                    他们只是偶尔会做一些奇怪的梦。梦见黑色的河。梦见纸做的船。梦见一盏怎么吹也吹不灭的灯。
+                </p>
+                <p>
+                    然后某一天，出于某个说不清的原因，他们点开了一个不起眼的网站。
+                </p>
+            </div>
+        </section>
+
+        <!-- 门 -->
+        <div class="finale-reveal" id="fr-6" style="text-align: center;">
+            <div class="door-visual"></div>
+        </div>
+
+        <div class="finale-reveal" id="fr-7" style="text-align: center;">
+            <p class="no-indent" style="color: var(--color-blood-bright); font-size: 1.4rem; letter-spacing: 0.3em; animation: textGlow 3s ease-in-out infinite;">
+                欢迎回家
+            </p>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem; margin-top: 24px;">
+                —— 槐安村327位村民 · 以及沈墨
+            </p>
+            <p class="no-indent" style="color: var(--color-text-faint); font-size: 0.75rem; margin-top: 40px;">
+                （门是虚掩的。它一直都是虚掩的。）<br>
+                （灯还亮着。它一直都在亮着。）<br>
+                （中元节快到了。）
+            </p>
+        </div>
+
+        <footer class="site-footer finale-reveal" id="fr-footer">
+            <p style="color: var(--color-blood);">这是第一页，也是最后一页。</p>
+            <p style="font-size: 0.7rem; margin-top: 8px;">云隐文化研究所 —— 从未存在过。</p>
+        </footer>
+    </div>
+
+    <script>
+        // 逐段揭示
+        document.addEventListener('DOMContentLoaded', function() {
+            var sections = ['fr-1', 'fr-2', 'fr-3', 'fr-4', 'fr-5', 'fr-6', 'fr-7', 'fr-footer'];
+            sections.forEach(function(id, idx) {
+                var el = document.getElementById(id);
+                if (el) {
+                    setTimeout(function() {
+                        el.classList.add('visible');
+                    }, 1500 + idx * 3500);
+                }
+            });
+        });
+    </script>
+    <script src="js/arg.js"></script>
+</body>
+</html>

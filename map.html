@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图室 | 云隐文化研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-mark">云</div>
+            <h1 class="site-title">地图室</h1>
+            <div class="site-subtitle">槐安村及周边地形示意</div>
+        </header>
+
+        <section class="fade-in">
+            <h2>槐安村地形图</h2>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
+                以下地图根据1987年现场勘查资料与沈墨研究员2024年实地测绘数据合成。地图上有三处红色标记，为沈墨研究员亲手标注。
+            </p>
+        </section>
+
+        <!-- 地图区域 -->
+        <div class="map-container fade-in-delay-1" id="map-canvas-wrap">
+            <div class="map-canvas" id="map-canvas">
+                <!-- 地形装饰：河流 -->
+                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25;" viewBox="0 0 800 350" preserveAspectRatio="none">
+                    <path d="M 50 280 Q 200 240 350 260 T 650 230 Q 720 220 780 240" fill="none" stroke="#2a4a5a" stroke-width="3" stroke-dasharray="8 4"/>
+                    <path d="M 100 80 Q 250 60 400 90 T 700 70" fill="none" stroke="#2a3a2a" stroke-width="2" stroke-dasharray="4 6"/>
+                    <circle cx="400" cy="170" r="60" fill="none" stroke="#3a2a2a" stroke-width="1.5"/>
+                    <circle cx="400" cy="170" r="90" fill="none" stroke="#2a2222" stroke-width="1"/>
+                    <circle cx="400" cy="170" r="120" fill="none" stroke="#221c1c" stroke-width="0.8"/>
+                </svg>
+
+                <!-- 地名标注 -->
+                <div style="position: absolute; top: 12%; left: 42%; color: var(--color-text-faint); font-size: 0.75rem; letter-spacing: 0.1em;">后山</div>
+                <div style="position: absolute; top: 48%; left: 46%; color: var(--color-text-faint); font-size: 0.75rem; letter-spacing: 0.1em;">槐安村遗址</div>
+                <div style="position: absolute; top: 78%; left: 30%; color: var(--color-text-faint); font-size: 0.75rem; letter-spacing: 0.1em;">黑水河</div>
+
+                <!-- 三个标记点 -->
+                <div class="map-point" data-char="禁" style="top: 30%; left: 25%;" title="标记一"></div>
+                <div class="map-point" data-char="封" style="top: 55%; left: 60%;" title="标记二"></div>
+                <div class="map-point" data-char="渡" style="top: 75%; left: 40%;" title="标记三"></div>
+
+                <!-- 悬停提示 -->
+                <div class="map-tooltip" id="map-tooltip"></div>
+            </div>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.8rem; margin-top: 12px; text-align: center;">
+                提示：将鼠标悬停在红色标记上可查看沈墨的批注；依次点击全部三个标记，可查看完整的批注序列。
+            </p>
+        </div>
+
+        <!-- 批注序列显示区 -->
+        <div class="fade-in-delay-2" style="text-align: center; margin: 30px 0;">
+            <div style="color: var(--color-text-dim); font-size: 0.85rem; margin-bottom: 8px;">沈墨的批注序列：</div>
+            <div id="map-sequence" style="font-size: 2rem; color: var(--color-gold); letter-spacing: 0.4em; min-height: 40px; font-family: var(--font-serif);"></div>
+            <div style="opacity: 0.01; transition: all 1s; pointer-events: none; margin-top: 24px;" id="map-cipher-link">
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                    三个字连起来，是禁卷第十二页记载的"封印之名"。沈墨的批注：它是一把钥匙。
+                </p>
+                <a href="cipher.html" class="btn">使用钥匙 →</a>
+            </div>
+        </div>
+
+        <!-- 沈墨的地图批注 -->
+        <div class="document fade-in-delay-3">
+            <div class="document-header">
+                <span class="document-id">档案编号: HA-2024-005</span>
+                <span class="document-classified">内部</span>
+            </div>
+            <h3>沈墨研究员地图批注转录</h3>
+            <p>
+                标记一（村北老槐树）：树的年轮不对。三百年的树，年轮只有三十七圈。像是1987年那一夜才"长"出来的。
+            </p>
+            <p>
+                标记二（祠堂）：壁画的眼睛朝向。无论站在祠堂哪个位置，那只眼睛都是正对着你的。这不是透视技巧——我试过了，是它的朝向在变。
+            </p>
+            <p>
+                标记三（黑水河渡口）：当地人说这河"从来没人敢夜渡"。但河床上全是河灯的残骸，密密麻麻，几百上千盏。像是很多年里，一直有人在这里放灯。
+            </p>
+            <p style="color: var(--color-blood-bright); text-indent: 0; text-align: center;">
+                "河灯明灭，照亮幽途。"
+            </p>
+            <p style="color: var(--color-text-dim); font-size: 0.85rem;">
+                [周然所长批注：沈墨失踪后，我去了那三个地方。标记一的槐树已被雷劈成两半，截面漆黑。标记二的祠堂，我没能进去——那天我在门口站了一个小时，双腿动不了。标记三……我什么都没看到，但那晚我梦见了黑色的河，和数不清的河灯。]
+            </p>
+        </div>
+
+        <footer class="site-footer">
+            <p>云隐文化研究所 © 2015-2024 · 内部档案</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>

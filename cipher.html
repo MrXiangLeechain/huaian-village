@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封印 | 未知页面</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header flicker">
+            <div class="logo-mark" style="color: var(--color-blood-bright);">封</div>
+            <h1 class="site-title glow-text">封印之门</h1>
+            <div class="site-subtitle">此页面不属于云隐文化研究所</div>
+        </header>
+
+        <section class="fade-in">
+            <div class="warning-box">
+                <div class="warning-title">⚠ 进入此页面意味着您已知晓槐安村事件</div>
+                <p class="no-indent" style="font-size: 0.9rem; color: var(--color-text-dim);">
+                    以下内容源自沈墨研究员上传至内部系统的最后一份加密文档。文档标题为《给找到这里的人》。
+                </p>
+            </div>
+        </section>
+
+        <section class="fade-in-delay-1">
+            <h2>给找到这里的人</h2>
+            <p>
+                如果你读到这里，说明你已经看过了日志、档案、信件和地图。你已经在兔子洞里走了很远。再往下，就是底部了。
+            </p>
+            <p>
+                我把最重要的话放在这里，用只有"走到这一步的人"才能打开的锁封存。锁的钥匙不在任何文件里——它在你一路走来的路上。地图上那三个字，连起来，就是钥匙。
+            </p>
+            <p>
+                输入它。
+            </p>
+        </section>
+
+        <!-- 密码输入区 -->
+        <div class="cipher-input-area fade-in-delay-2">
+            <label>请输入封印之名（地图上的三个字）</label>
+            <input type="text" class="cipher-input" id="cipher-input"
+                   placeholder="输入三个字..." autocomplete="off">
+            <button class="cipher-submit" onclick="checkCipherPassword()">解除封印</button>
+            <div class="cipher-message" id="cipher-message"></div>
+
+            <!-- 解锁后的内容 -->
+            <div class="cipher-unlocked" id="cipher-unlocked">
+                <div class="document" style="text-align: left;">
+                    <div class="document-header">
+                        <span class="document-id">文档编号: SM-FINAL-001</span>
+                        <span class="document-classified">绝密</span>
+                    </div>
+                    <h3>沈墨的最终文档</h3>
+                    <div class="unlocked-text" data-full="我叫沈墨。或者说，我原本叫沈墨。&#10;&#10;在翻完禁卷的那一刻，我想起来了。不是推理，不是联想——是想起。像想起一个被忘了很多年的梦。&#10;&#10;我的祖母姓王。王，是槐安村第一大姓。1987年，她带着我父亲逃出了那个村子。她是唯一逃出来的人。&#10;&#10;槐安村的人没有消失。他们把自己献给了封印。三百年，一代一代，用血脉做锁，用性命做门。&#10;&#10;而我的祖母，是最后一代守封人。她逃走了。锁，从此开始松动。&#10;&#10;我来到这个村子，不是巧合。是封印在呼唤它的血脉。&#10;&#10;如果你也找到了这里——请你回答我一个问题：你，为什么会点开这个网站？&#10;&#10;最后，若你想完成仪式，记住顺序。禁卷写得很清楚：&#10;香烛通阴阳，引魂幡指归途，纸船渡河，河灯照幽冥，纸钱安亡灵。&#10;最后撒纸钱，以安亡灵。&#10;&#10;不要弄错顺序。错的代价，我已经见过了。&#10;&#10;——沈墨">
+                        </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                        文档末尾附着一张手绘的仪式图。五个祭品围成一圈，与祠堂壁画上的图案一致。
+                    </p>
+                    <a href="ritual.html" class="btn btn-gold">进入仪式 →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p style="color: var(--color-blood);">此页面不应存在</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>

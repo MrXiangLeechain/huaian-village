@@ -1,0 +1,2 @@
+# 本文件让 GitHub Pages 跳过 Jekyll 构建，直接以纯静态文件方式发布。
+# ARG 网站全部为纯 HTML/CSS/JS，无需任何构建过程。

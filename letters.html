@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信件 | 云隐文化研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-mark">云</div>
+            <h1 class="site-title">信件档案</h1>
+            <div class="site-subtitle">沈墨 · 与周然所长的往来信件</div>
+        </header>
+
+        <section class="fade-in">
+            <h2>信件一</h2>
+            <div class="letter">
+                <div class="letter-header">
+                    <div class="recipient">致：周然所长</div>
+                </div>
+                <div class="letter-body">
+                    <p>周老师：</p>
+                    <p>
+                        见字如面。我已在槐安村驻扎一周，收获远超预期。这个村子不简单——它不像普通的"消失"案例，一切都太整齐了，整齐得不自然。
+                    </p>
+                    <p>
+                        我在祠堂里发现了那幅壁画。周老师，我从来没有见过那样的东西。它不像任何已知的民间信仰图式。我附了照片，但照片根本拍不出那种感觉——您知道吗，我总觉得那只"眼睛"在看着我。
+                    </p>
+                    <p>
+                        村里那位陈婆婆说的"先燃香烛"，我查了方志和民俗志，没有任何中元节习俗是以"燃香烛"开头的。这不是习俗，这是某种特定仪式的步骤。我需要更多资料。
+                    </p>
+                    <p>
+                        请帮忙调取所里1987年的原始卷宗，特别是当时现场勘查的完整报告。我记得档案编号里有地图相关的内容。
+                    </p>
+                    <p>
+                        另，我最近总做同一个梦：一片黑色的河面，河上飘着纸船，船上有灯。有个声音一直在念叨什么，我听不清，但感觉很熟悉，像是小时候听过的调子。
+                    </p>
+                    <p>
+                        大概是太累了吧。
+                    </p>
+                </div>
+                <div class="letter-signature">沈墨 · 2024年3月22日</div>
+            </div>
+        </section>
+
+        <section class="fade-in-delay-1">
+            <h2>信件二</h2>
+            <div class="letter">
+                <div class="letter-header">
+                    <div class="recipient">致：周然所长</div>
+                </div>
+                <div class="letter-body">
+                    <p>周老师：</p>
+                    <p>
+                        出事了。
+                    </p>
+                    <p>
+                        我找到了那本"禁卷"。我不该翻的，但我翻了。周老师，那不是民俗记录，那是仪式指南。完整的、可执行的仪式指南。槐安村的村民不是在"祭祖"——他们在执行某种封印，一代一代，三百年。
+                    </p>
+                    <p>
+                        1987年那天晚上，他们不是消失。他们是……完成了仪式。以他们自己为祭品。
+                    </p>
+                    <p>
+                        我没法在信里写太多。我在这封信的末尾用您教我的老办法留了一段话，您看到就明白了。东西我留在老地方，您知道去哪找。
+                    </p>
+                    <p>
+                        周老师，如果我没有回来，请把我的研究继续下去。记住我信里说的："再悬引魂幡，指引归途。"这句话的意思，您看了禁卷就懂了。
+                    </p>
+                    <p>
+                        别来找我。这是忠告，也是请求。
+                    </p>
+                    <p style="text-indent: 0;">
+                        —— 沈墨
+                    </p>
+                </div>
+                <div class="letter-signature">沈墨 · 2024年3月27日（最后一封）</div>
+            </div>
+        </section>
+
+        <!-- 加密段落 -->
+        <section class="fade-in-delay-2">
+            <h2>附：沈墨信件末尾的加密段落</h2>
+            <div class="document">
+                <div class="document-header">
+                    <span class="document-id">档案编号: HA-2024-004</span>
+                    <span class="document-classified">已解密</span>
+                </div>
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
+                    以下为沈墨信件末尾附加的加密文字。据周然所长回忆，这是他与沈墨之间的私人文字游戏——"移位的字母"。
+                </p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <div id="cipher-text" style="font-family: var(--font-mono); font-size: 1.15rem; color: var(--color-blood-bright); letter-spacing: 0.15em; line-height: 2;">
+                        AOL THW YLTLTILYZ HSS
+                    </div>
+                    <button class="cipher-submit" style="margin-top: 24px;" onclick="decodeLetterCipher()">
+                        移位七位 · 解密
+                    </button>
+                    <div id="cipher-decoded" style="margin-top: 20px; font-family: var(--font-mono); font-size: 1.05rem; color: var(--color-gold); opacity: 0; transition: opacity 0.8s; letter-spacing: 0.12em;"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px; opacity: 0.01; transition: all 1s; pointer-events: none;" id="letter-hidden-link">
+                    <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                        "老地方"——沈墨和周然约定存放资料的位置。周然所长的批注：地图室。
+                    </p>
+                    <a href="map.html" class="btn">前往地图室 →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>云隐文化研究所 © 2015-2024 · 内部档案</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>
