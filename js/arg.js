@@ -124,13 +124,18 @@ function checkArchiveAnswer() {
     }
 }
 
-// ===== 研究项目：projects.html 隐藏入口显形 =====
+// ===== 研究项目：projects.html 隐藏入口显形（悬停显形，数秒后自动消失） =====
+var projectsHideTimer = null;
 function revealProjectsLink() {
     var hidden = document.getElementById('projects-hidden-link');
-    if (hidden) {
-        hidden.style.opacity = '1';
-        hidden.style.pointerEvents = 'auto';
-    }
+    if (!hidden) return;
+    hidden.style.opacity = '1';
+    hidden.style.pointerEvents = 'auto';
+    if (projectsHideTimer) clearTimeout(projectsHideTimer);
+    projectsHideTimer = setTimeout(function() {
+        hidden.style.opacity = '0';
+        hidden.style.pointerEvents = 'none';
+    }, 5000);
 }
 
 // ===== 凯撒密码：letters.html =====
@@ -364,30 +369,46 @@ function typewriterEffect(element) {
     type();
 }
 
-// ===== 残账数字密码：ledger.html =====
-var LEDGER_MAP = {
-    '01': '渡', '02': '口', '03': '莫', '04': '回', '05': '头',
-    '06': '封', '07': '禁', '08': '安', '09': '槐', '10': '村'
-};
+// ===== 残账棋盘密码：ledger.html =====
+var LEDGER_GRID = [
+    ['渡', '口', '莫', '回', '头'],
+    ['莫', '问', '归', '处', '安'],
+    ['禁', '封', '渡', '夜', '中'],
+    ['元', '子', '沉', '即', '槐'],
+    ['村', '火', '水', '书', '然']
+];
 
-function toggleLedgerNote() {
-    var note = document.getElementById('ledger-note');
-    if (note) note.style.display = (note.style.display === 'none' || note.style.display === '') ? 'block' : 'none';
+function renderLedgerGrid() {
+    var g = document.getElementById('ledger-grid');
+    if (!g) return;
+    var html = '<table class="ledger-grid-table">';
+    html += '<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>';
+    for (var r = 0; r < 5; r++) {
+        html += '<tr><th class="lg-row">' + (r + 1) + '</th>';
+        for (var c = 0; c < 5; c++) {
+            html += '<td>' + LEDGER_GRID[r][c] + '</td>';
+        }
+        html += '</tr>';
+    }
+    html += '</table>';
+    g.innerHTML = html;
 }
 
 function checkLedgerAnswer() {
-    var codeEl = document.getElementById('ledger-code');
+    // 只取朱笔圈定者（.ledger-real），黑底干扰项忽略
+    var els = document.querySelectorAll('#ledger-roster .ledger-real');
+    var answer = '';
+    els.forEach(function(el) {
+        var p = el.textContent.trim();
+        var r = parseInt(p.charAt(0), 10) - 1;
+        var c = parseInt(p.charAt(1), 10) - 1;
+        if (LEDGER_GRID[r] && LEDGER_GRID[r][c]) answer += LEDGER_GRID[r][c];
+    });
+
     var input = document.getElementById('ledger-answer');
     var msg = document.getElementById('ledger-message');
     var hidden = document.getElementById('ledger-hidden-link');
-    if (!codeEl || !input || !msg) return;
-
-    // 由页面数字串实时解出答案（不硬编码）
-    var parts = codeEl.textContent.trim().split(/\s+/);
-    var answer = '';
-    for (var i = 0; i < parts.length; i++) {
-        answer += LEDGER_MAP[parts[i]] || '';
-    }
+    if (!input || !msg) return;
 
     var guess = input.value.replace(/\s+/g, '');
     if (guess === answer && guess !== '') {
@@ -400,24 +421,50 @@ function checkLedgerAnswer() {
         input.disabled = true;
     } else {
         msg.style.color = 'var(--color-blood-bright)';
-        msg.textContent = '数字对不上。再看看册背的译例。';
+        msg.textContent = '数字对不上。只取朱笔圈定的那些。';
         input.classList.add('shake');
         setTimeout(function() { input.classList.remove('shake'); }, 500);
     }
 }
 
-// ===== 镜书汉字密码：mirror.html =====
+// ===== 镜书蛇形密码：mirror.html =====
+var MIRROR_GRID = [
+    ['回', '头', '即', '沉'],
+    ['期', '归', '问', '莫'],
+    ['渡', '口', '安', '处']
+];
+
+function renderMirror() {
+    var wrap = document.getElementById('mirror-grid');
+    if (!wrap) return;
+    var html = '';
+    for (var r = 0; r < MIRROR_GRID.length; r++) {
+        html += '<div class="mirror-row">';
+        for (var c = 0; c < MIRROR_GRID[r].length; c++) {
+            html += '<span class="mirror-cell">' + MIRROR_GRID[r][c] + '</span>';
+        }
+        html += '</div>';
+    }
+    wrap.innerHTML = html;
+}
+
 function checkMirrorAnswer() {
-    var textEl = document.getElementById('mirror-text');
+    // 蛇形：偶数行正读，奇数行反读（自上而下）
+    var answer = '';
+    for (var r = 0; r < MIRROR_GRID.length; r++) {
+        if (r % 2 === 0) {
+            answer += MIRROR_GRID[r].join('');
+        } else {
+            answer += MIRROR_GRID[r].slice().reverse().join('');
+        }
+    }
+
     var input = document.getElementById('mirror-answer');
     var msg = document.getElementById('mirror-message');
     var hidden = document.getElementById('mirror-hidden-link');
-    if (!textEl || !input || !msg) return;
+    if (!input || !msg) return;
 
-    // 镜像文本的正字即答案（来自页面本体）
-    var answer = textEl.textContent.replace(/\s+/g, '');
     var guess = input.value.replace(/\s+/g, '');
-
     if (guess === answer && guess !== '') {
         msg.style.color = 'var(--color-gold)';
         msg.textContent = '镜中读出的，是给后来者的警告。';
@@ -428,17 +475,30 @@ function checkMirrorAnswer() {
         input.disabled = true;
     } else {
         msg.style.color = 'var(--color-blood-bright)';
-        msg.textContent = '镜面颠倒，你读反了。';
+        msg.textContent = '镜面颠倒——不止字反，行亦反。再循蛇形读一遍。';
         input.classList.add('shake');
         setTimeout(function() { input.classList.remove('shake'); }, 500);
     }
 }
 
-// ===== 卦象密码：omen.html =====
-var OMEN_MAP = {
-    '☰': '中', '☷': '元', '☳': '子', '☴': '夜',
-    '☵': '禁', '☲': '封', '☶': '渡', '☱': '安'
+// ===== 卦象爻变密码：omen.html =====
+// 三爻结构，自上而下（上、中、下），1=阳 0=阴
+var TRIGRAM_LINES = {
+    '☰': [1, 1, 1], '☱': [0, 1, 1], '☲': [1, 0, 1], '☳': [0, 0, 1],
+    '☴': [1, 1, 0], '☵': [0, 1, 0], '☶': [1, 0, 0], '☷': [0, 0, 0]
 };
+var TRIGRAM_CHAR = {
+    '☰': '中', '☷': '元', '☳': '子', '☴': '夜',
+    '☵': '莫', '☲': '回', '☶': '头', '☱': '禁'
+};
+
+function trigramFromLines(arr) {
+    for (var k in TRIGRAM_LINES) {
+        var v = TRIGRAM_LINES[k];
+        if (v[0] === arr[0] && v[1] === arr[1] && v[2] === arr[2]) return k;
+    }
+    return '?';
+}
 
 function toggleOmenNote() {
     var note = document.getElementById('omen-note');
@@ -452,13 +512,20 @@ function checkOmenAnswer() {
     var hidden = document.getElementById('omen-hidden-link');
     if (!guaWrap || !input || !msg) return;
 
-    // 由页面卦象序列（自左向右）实时解出时辰（不硬编码）
-    var guaEls = guaWrap.querySelectorAll('.gua');
+    // 只取有效卦（跳过废卦）；遇动爻则先翻转该爻阴阳，得真卦后再查表
+    var guaEls = guaWrap.querySelectorAll('.gua:not(.gua-decoy)');
     var answer = '';
-    for (var i = 0; i < guaEls.length; i++) {
-        var g = guaEls[i].getAttribute('data-gua');
-        answer += OMEN_MAP[g] || '';
-    }
+    guaEls.forEach(function(el) {
+        var sym = el.getAttribute('data-gua');
+        var chg = el.getAttribute('data-change');
+        var lines = TRIGRAM_LINES[sym].slice();
+        if (chg) {
+            var idx = parseInt(chg, 10) - 1; // 1=上 2=中 3=下
+            lines[idx] = lines[idx] ? 0 : 1;
+        }
+        var trueSym = trigramFromLines(lines);
+        answer += TRIGRAM_CHAR[trueSym] || '';
+    });
 
     var guess = input.value.replace(/\s+/g, '');
     if (guess === answer && guess !== '') {
@@ -471,7 +538,7 @@ function checkOmenAnswer() {
         input.disabled = true;
     } else {
         msg.style.color = 'var(--color-blood-bright)';
-        msg.textContent = '卦象连读有误。顺序，本就在画里。';
+        msg.textContent = '卦象有误。先化动爻、再查表、依左序连读——别把相似的卦看混了。';
         input.classList.add('shake');
         setTimeout(function() { input.classList.remove('shake'); }, 500);
     }

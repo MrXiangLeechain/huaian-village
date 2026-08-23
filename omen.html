@@ -15,38 +15,43 @@
         </header>
 
         <section class="fade-in">
-            <h2>朱砂四卦</h2>
+            <h2>朱砂卦象</h2>
             <div class="document">
                 <div class="document-header">
                     <span class="document-id">档案编号: HA-1987-0815-戊</span>
                     <span class="document-classified">残损</span>
                 </div>
                 <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
-                    残纸背面以朱砂画下四道卦象，旁注「天意所示，时辰即藏其中」。沈墨另纸录有卦象对应的字例，却未言明四卦当依何序连读——他说：「顺序，本就在画里。」
+                    残纸背面以朱砂画下数道卦象，旁注「天意所示，时辰即藏其中」。沈墨另纸录有卦象对应的字例，却提醒：「卦有动爻——所动之爻，阴阳互换，方得真卦。相似之卦，最易看错。废卦一道，已为朱笔划去，勿取。」
                 </p>
 
-                <div style="text-align: center; margin: 34px 0 10px;">
-                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 16px;">朱砂卦象（按原纸自左向右）：</div>
-                    <div id="omen-gua" style="font-size: 2.4rem; color: var(--color-gold); letter-spacing: 0.4em; line-height: 1.6;">
+                <div style="text-align: center; margin: 30px 0 8px;">
+                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 14px;">朱砂卦象（自左向右；括号内为所动之爻：上=第一行，中=第二行，下=第三行，自上而下计）：</div>
+                    <div id="omen-gua" style="font-size: 2.6rem; color: var(--color-gold); letter-spacing: 0.3em; line-height: 1.7;">
                         <span class="gua" data-gua="☰">☰</span>
                         <span class="gua" data-gua="☷">☷</span>
-                        <span class="gua" data-gua="☳">☳</span>
+                        <span class="gua" data-gua="☲" data-change="1">☲<span style="font-size: 0.9rem; color: var(--color-blood-bright);">（上爻动）</span></span>
                         <span class="gua" data-gua="☴">☴</span>
+                        <span class="gua" data-gua="☱" data-change="3">☱<span style="font-size: 0.9rem; color: var(--color-blood-bright);">（下爻动）</span></span>
+                        <span class="gua" data-gua="☲">☲</span>
+                        <span class="gua" data-gua="☶">☶</span>
+                        <span class="gua gua-decoy" data-gua="☱" style="opacity: 0.35; text-decoration: line-through;">☱<span style="font-size: 0.9rem;">（废卦）</span></span>
                     </div>
 
                     <button class="cipher-submit" style="margin-top: 26px; display: inline-block; font-size: 0.85rem;" onclick="toggleOmenNote()">
                         查看沈墨的卦例
                     </button>
-                    <div id="omen-note" style="display: none; margin: 18px auto 0; max-width: 460px; padding: 14px 18px; border: 1px dashed var(--color-border); border-radius: 6px; color: var(--color-text-dim); font-size: 0.85rem; line-height: 2; text-align: left;">
+                    <div id="omen-note" style="display: none; margin: 18px auto 0; max-width: 480px; padding: 14px 18px; border: 1px dashed var(--color-border); border-radius: 6px; color: var(--color-text-dim); font-size: 0.85rem; line-height: 2; text-align: left;">
                         沈墨抄录的卦字对应（节选自《禁卷》第十三页）：<br>
-                        「☰ 为 中　☷ 为 元　☳ 为 子　☴ 为 夜<br>
-                        ☵ 为 禁　☲ 为 封　☶ 为 渡　☱ 为 安」
+                        「☰ 乾 → 中　☱ 兑 → 禁　☲ 离 → 回　☳ 震 → 子<br>
+                        ☴ 巽 → 夜　☵ 坎 → 莫　☶ 艮 → 头　☷ 坤 → 元」<br>
+                        <span style="color: var(--color-text-faint); font-size: 0.8rem;">注：遇有「动爻」，先将该爻阴阳互换得真卦，再查上表。卦象自左向右依次连读。</span>
                     </div>
 
-                    <div style="margin-top: 30px;">
-                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">天意所示之时辰（按卦象自左向右连读）：</label>
+                    <div style="margin-top: 28px;">
+                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">天意所示之时辰（先化动爻、再查表、自左向右连读）：</label>
                         <input type="text" class="cipher-input" id="omen-answer"
-                               placeholder="在此写下四字时辰..." autocomplete="off"
+                               placeholder="在此写下时辰字句..." autocomplete="off"
                                style="font-size: 1.05rem; letter-spacing: 0.2em; text-align: center;">
                         <button class="cipher-submit" style="margin-top: 18px;" onclick="checkOmenAnswer()">
                             呈上卦解

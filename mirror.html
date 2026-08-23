@@ -22,25 +22,31 @@
                     <span class="document-classified">残损</span>
                 </div>
                 <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
-                    纸页大半焚毁，残存的四字像是写于镜面——正着看只觉笔画颠倒，唯有借着烛火映在另一面，方能辨其本形。沈墨批注：「镜中之字，反过来念才是真话。」
+                    纸页大半焚毁，残存字样像是写于镜面——正着看只觉笔画颠倒，唯有借着烛火映在另一面，方能辨其本形。沈墨批注：「镜中之字，反过来念才是真话。不止字反，行亦反——蛇行而读，方得其序。」
                 </p>
 
-                <div style="text-align: center; margin: 38px 0 10px;">
-                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 18px;">残纸上的字样（镜面映象）：</div>
-                    <!-- 水平镜像渲染：每个字左右翻转，字序不变；玩家需脑补正字 -->
-                    <div id="mirror-text" style="display: inline-block; transform: scaleX(-1); font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-blood-bright); letter-spacing: 0.3em; line-height: 1.6;">
-                        回头即沉
-                    </div>
+                <h3 style="margin-top: 28px; color: var(--color-gold-dim); font-size: 0.95rem;">正页 · 镜中蛇行（每行自镜面映出，字字颠倒）</h3>
+                <p class="no-indent" style="color: var(--color-text-faint); font-size: 0.78rem; margin-bottom: 10px;">
+                    上行为正读，中行倒读，末行正读（蛇形）。先将每个字转正，再依蛇形连读。
+                </p>
+                <div id="mirror-grid" style="margin: 14px 0 8px;"></div>
 
-                    <div style="margin-top: 32px;">
-                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你从镜中读出的正字（按原顺序）：</label>
-                        <input type="text" class="cipher-input" id="mirror-answer"
-                               placeholder="在此写下你辨出的四字..." autocomplete="off"
-                               style="font-size: 1.1rem; letter-spacing: 0.3em; text-align: center;">
-                        <button class="cipher-submit" style="margin-top: 18px;" onclick="checkMirrorAnswer()">
-                            呈上释文
-                        </button>
-                    </div>
+                <h3 style="margin-top: 26px; color: var(--color-gold-dim); font-size: 0.95rem;">另一残片（真伪难辨）</h3>
+                <p class="no-indent" style="color: var(--color-text-faint); font-size: 0.78rem; margin-bottom: 8px;">
+                    沈墨另纸：「残片不论，唯正页蛇行可读。」以下字样请无视：
+                </p>
+                <div style="transform: scaleX(-1); display: inline-block; font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-text-faint); letter-spacing: 0.3em; opacity: 0.6;">
+                    舟侧畔千
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你从镜中读出的正字（按蛇形顺序连读）：</label>
+                    <input type="text" class="cipher-input" id="mirror-answer"
+                           placeholder="在此写下你辨出的字句..." autocomplete="off"
+                           style="font-size: 1.05rem; letter-spacing: 0.2em; text-align: center;">
+                    <button class="cipher-submit" style="margin-top: 18px;" onclick="checkMirrorAnswer()">
+                        呈上释文
+                    </button>
                     <div class="cipher-message" id="mirror-message" style="margin-top: 16px;"></div>
                 </div>
 

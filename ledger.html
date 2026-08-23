@@ -22,33 +22,31 @@
                     <span class="document-classified">残损</span>
                 </div>
                 <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
-                    名册大半被水浸毁，仅余红笔圈出的几列数字尚可辨认。沈墨在页边批注：「不知何人所作，但凡数字，皆有所指——像是某种暗号。」
+                    名册大半被水浸毁，仅余红笔圈出的几列数字尚可辨认。沈墨在页边批注：「不知何人所作，但凡数字，皆有所指——像是某种暗号。册背另绘一方格，格中各有字，数字当是入格之坐标。」
                 </p>
 
-                <div style="text-align: center; margin: 34px 0 10px;">
-                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 14px;">圈注数字（按原册顺序排列）：</div>
-                    <div id="ledger-code" style="font-family: var(--font-mono); font-size: 1.5rem; color: var(--color-blood-bright); letter-spacing: 0.45em; line-height: 2;">
-                        01 02 03 04 05
-                    </div>
+                <h3 style="margin-top: 28px; color: var(--color-gold-dim); font-size: 0.95rem;">其一 · 方格（册背原绘）</h3>
+                <div id="ledger-grid" style="margin: 16px 0 10px;"></div>
+                <p class="no-indent" style="color: var(--color-text-faint); font-size: 0.78rem;">
+                    方格五纵五横。每组二字，前为行、后为列。于格中按序觅字，连之成句。
+                </p>
 
-                    <button class="cipher-submit" style="margin-top: 26px; display: inline-block; font-size: 0.85rem;" onclick="toggleLedgerNote()">
-                        查看残页注记
+                <h3 style="margin-top: 28px; color: var(--color-gold-dim); font-size: 0.95rem;">其二 · 名册数字（按原册竖列抄录）</h3>
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem; margin-bottom: 12px;">
+                    朱笔圈定者为真（<span style="color: var(--color-blood-bright);">红</span>），余皆为账簿底色（黑，已被水渍晕开，可略）：
+                </p>
+                <div id="ledger-roster" style="font-family: var(--font-mono); font-size: 1.15rem; color: var(--color-blood-bright); letter-spacing: 0.35em; line-height: 2.4; text-align: center;">
+                    <span class="ledger-real">11</span> <span class="ledger-real">12</span> <span style="color: var(--color-text-faint); text-decoration: line-through; opacity: 0.45;">31</span> <span class="ledger-real">13</span> <span class="ledger-real">14</span> <span style="color: var(--color-text-faint); text-decoration: line-through; opacity: 0.45;">44</span> <span class="ledger-real">15</span> <span class="ledger-real">13</span> <span style="color: var(--color-text-faint); text-decoration: line-through; opacity: 0.45;">52</span> <span class="ledger-real">22</span> <span style="color: var(--color-text-faint); text-decoration: line-through; opacity: 0.45;">35</span> <span class="ledger-real">23</span> <span style="color: var(--color-text-faint); text-decoration: line-through; opacity: 0.45;">21</span>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你的解读（只取朱笔圈定者，按原序写出对应汉字）：</label>
+                    <input type="text" class="cipher-input" id="ledger-answer"
+                           placeholder="在此写下你解出的词句..." autocomplete="off"
+                           style="font-size: 1.05rem; letter-spacing: 0.15em;">
+                    <button class="cipher-submit" style="margin-top: 18px;" onclick="checkLedgerAnswer()">
+                        呈上解读
                     </button>
-                    <div id="ledger-note" style="display: none; margin: 18px auto 0; max-width: 460px; padding: 14px 18px; border: 1px dashed var(--color-border); border-radius: 6px; color: var(--color-text-dim); font-size: 0.85rem; line-height: 2; text-align: left;">
-                        沈墨抄录于册背的「译例」残句：<br>
-                        「一为渡，二为口，三为莫，四为回，五为头；六封七禁，八安九槐，十村而尽。」<br>
-                        <span style="color: var(--color-text-faint); font-size: 0.8rem;">——其余数字对应何种字，册页已毁，无从稽考。</span>
-                    </div>
-
-                    <div style="margin-top: 30px;">
-                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你的解读（按数字顺序写出对应汉字）：</label>
-                        <input type="text" class="cipher-input" id="ledger-answer"
-                               placeholder="在此写下你解出的词句..." autocomplete="off"
-                               style="font-size: 1.05rem; letter-spacing: 0.15em;">
-                        <button class="cipher-submit" style="margin-top: 18px;" onclick="checkLedgerAnswer()">
-                            呈上解读
-                        </button>
-                    </div>
                     <div class="cipher-message" id="ledger-message" style="margin-top: 16px;"></div>
                 </div>
 
