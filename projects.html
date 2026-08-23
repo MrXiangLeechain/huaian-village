@@ -19,8 +19,8 @@
             <a href="events.html">学术活动</a>
             <a href="publications.html">出版物</a>
             <a href="about.html">关于我们</a>
-            <a href="contact.html">联系我们</a>
             <a href="projects.html" class="nav-gated" style="display:none;">研究项目</a>
+            <a href="contact.html">联系我们</a>
         </nav>
 
         <section class="fade-in">
@@ -54,14 +54,13 @@
                 </p>
 
             </div>
-            <!-- 隐藏入口：需点击按钮或悬停特定区域才显现 -->
+            <!-- 隐藏入口：仅悬停特定文字才显现，数秒后自动消失 -->
             <div style="margin-top: 16px; padding: 14px; border: 1px dashed var(--color-border); border-radius: 6px;">
                 <div id="projects-hotspot" onmouseenter="revealProjectsLink()"
-                     style="cursor: help; color: var(--color-text-faint); font-size: 0.82rem; user-select: none; line-height: 1.8;">
-                    〔 档案边缘有一行似乎被反复涂抹过的手写批注……把鼠标⬛到这里，或⬛⬛⬛⬛⬛，让它显形 〕
+                     style="display: inline-block; cursor: help; color: var(--color-text-faint); font-size: 0.82rem; user-select: none; line-height: 1.8;">
+                    〔 档案边缘有一行似乎被反复涂抹过的手写批注……把鼠标停在这里，让它显形 〕
                 </div>
-                <button class="cipher-submit" style="margin-top: 12px; font-size: 0.85rem;" onclick="revealProjectsLink()">查看被涂抹的批注</button>
-                <div id="projects-hidden-link" style="margin-top: 12px; opacity: 0.01; transition: all 0.8s; pointer-events: none;">
+                <div id="projects-hidden-link" style="margin-top: 16px; text-align: center; opacity: 0; transition: opacity 0.8s; pointer-events: none;">
                     <a href="journal.html" class="btn">沈墨的日志</a>
                 </div>
             </div>

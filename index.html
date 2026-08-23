@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- 研究员内部入口: /projects.html -->
     <!-- 如果你正在查看源代码，请前往 /projects.html 寻找研究档案 -->
+    <!--
+      [内部系统登录提示]
+      管理员账号：所内简称，三小写拼音。
+      密码：那串在本站反复出现的数字——老项目的生日。
+      如需帮助，查看 contact.html 页面页脚的值班电话后八位。
+    -->
 </head>
 <body>
     <div class="container">
@@ -21,8 +27,8 @@
             <a href="events.html">学术活动</a>
             <a href="publications.html">出版物</a>
             <a href="about.html">关于我们</a>
-            <a href="contact.html">联系我们</a>
             <a href="projects.html" class="nav-gated" style="display:none;">研究项目</a>
+            <a href="contact.html">联系我们</a>
         </nav>
 
         <section class="fade-in">
@@ -60,6 +66,23 @@
                 <div class="card-excerpt">
                     因近期研究工作调整，本所自即日起暂停线下接待服务。线上咨询及档案查阅服务不受影响。敬请谅解。
                 </div>
+            </div>
+        </section>
+
+        <!-- 内部系统登录 -->
+        <section class="fade-in-delay-2" style="margin-top: 48px; border-top: 1px dashed var(--color-border); padding-top: 28px;">
+            <h2 style="font-size: 1.05rem; color: var(--color-text-dim);">内部系统登录</h2>
+            <p class="no-indent" style="color: var(--color-text-faint); font-size: 0.8rem;">
+                仅研究所管理员可访问受限研究档案。账号与密码请咨询所内通讯录。
+            </p>
+            <div class="cipher-input-area" style="margin-top: 18px; max-width: 420px;">
+                <input type="text" class="cipher-input" id="login-user" placeholder="管理员账号" autocomplete="off">
+                <input type="password" class="cipher-input" id="login-pass" placeholder="密码" autocomplete="off" style="margin-top: 10px;">
+                <button class="cipher-submit" style="margin-top: 12px;" onclick="doLogin()">登录</button>
+                <div class="cipher-message" id="login-message" style="margin-top: 10px;"></div>
+            </div>
+            <div id="login-success" style="display:none; margin-top: 16px; color: var(--color-gold);">
+                身份验证通过。顶部导航已解锁「研究项目」。
             </div>
         </section>
 

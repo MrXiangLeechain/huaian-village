@@ -381,6 +381,79 @@ a:hover {
     margin-top: 32px;
 }
 
+/* --- 残账棋盘 --- */
+.ledger-grid-table {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-text);
+    text-align: center;
+}
+
+.ledger-grid-table th,
+.ledger-grid-table td {
+    border: 1px solid var(--color-border);
+    padding: 10px 8px;
+    width: 18%;
+}
+
+.ledger-grid-table th {
+    color: var(--color-gold-dim);
+    background: var(--bg-card);
+    font-size: 0.85rem;
+}
+
+.ledger-grid-table .lg-row {
+    width: 10%;
+}
+
+/* --- 镜书 --- */
+.mirror-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.mirror-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border);
+    background: var(--bg-card);
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: var(--color-text);
+    transform: scaleX(-1);
+}
+
+.mirror-real {
+    border-color: var(--color-gold-dim);
+    color: var(--color-gold);
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.12);
+}
+
+.mirror-decoy {
+    opacity: 0.35;
+    text-decoration: line-through;
+}
+
+/* --- 卦象 --- */
+.gua {
+    display: inline-block;
+    margin: 0 6px;
+}
+
+.gua-decoy {
+    opacity: 0.35;
+    text-decoration: line-through;
+}
+
 /* --- 仪式交互 --- */
 .ritual-area {
     text-align: center;

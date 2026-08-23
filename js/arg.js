@@ -7,6 +7,51 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.classList.add('fade-in');
 });
 
+// ===== 内部登录与受限导航 =====
+function initGatedNav() {
+    var loggedIn = sessionStorage.getItem('yunyin_login') === '1';
+    var gated = document.querySelectorAll('.nav-gated');
+    gated.forEach(function(link) {
+        link.style.display = loggedIn ? '' : 'none';
+    });
+
+    // 若当前在 index.html 且已登录，更新登录区提示
+    var successBox = document.getElementById('login-success');
+    var loginBox = document.querySelector('.cipher-input-area');
+    if (loggedIn && successBox) {
+        successBox.style.display = 'block';
+        if (loginBox) loginBox.style.display = 'none';
+    }
+}
+
+function doLogin() {
+    var userInput = document.getElementById('login-user');
+    var passInput = document.getElementById('login-pass');
+    var msg = document.getElementById('login-message');
+    var successBox = document.getElementById('login-success');
+    var loginBox = document.querySelector('.cipher-input-area');
+    if (!userInput || !passInput || !msg) return;
+
+    var user = userInput.value.trim().toLowerCase();
+    var pass = passInput.value.trim();
+
+    // 管理员账号：yunyin（所内简称，三小写拼音——实际为 "云隐" 拼音首段）
+    // 密码：19870815（槐安村项目编号 HAC-1987-0815 中的数字部分，即“老项目的生日”）
+    if (user === 'yunyin' && pass === '19870815') {
+        sessionStorage.setItem('yunyin_login', '1');
+        msg.style.color = 'var(--color-gold)';
+        msg.textContent = '身份验证通过。';
+        initGatedNav();
+        if (successBox) successBox.style.display = 'block';
+        if (loginBox) loginBox.style.display = 'none';
+    } else {
+        msg.style.color = 'var(--color-blood-bright)';
+        msg.textContent = '账号或密码错误。提示在源代码注释里。';
+        passInput.classList.add('shake');
+        setTimeout(function() { passInput.classList.remove('shake'); }, 500);
+    }
+}
+
 // ===== 密码保护页：journal.html =====
 function checkJournalPassword() {
     var input = document.getElementById('journal-password');
@@ -427,7 +472,7 @@ function checkLedgerAnswer() {
     }
 }
 
-// ===== 镜书蛇形密码：mirror.html =====
+// ===== 镜书倒影密码：mirror.html =====
 var MIRROR_GRID = [
     ['回', '头', '即', '沉'],
     ['期', '归', '问', '莫'],
@@ -441,7 +486,9 @@ function renderMirror() {
     for (var r = 0; r < MIRROR_GRID.length; r++) {
         html += '<div class="mirror-row">';
         for (var c = 0; c < MIRROR_GRID[r].length; c++) {
-            html += '<span class="mirror-cell">' + MIRROR_GRID[r][c] + '</span>';
+            // 仅最上一行为镜中真实字迹；其余为水渍污痕干扰
+            var cls = (r === 0) ? 'mirror-cell mirror-real' : 'mirror-cell mirror-decoy';
+            html += '<span class="' + cls + '">' + MIRROR_GRID[r][c] + '</span>';
         }
         html += '</div>';
     }
@@ -449,15 +496,12 @@ function renderMirror() {
 }
 
 function checkMirrorAnswer() {
-    // 蛇形：偶数行正读，奇数行反读（自上而下）
+    // 只取镜中真实字迹（.mirror-real），按页面原序连读
+    var reals = document.querySelectorAll('#mirror-grid .mirror-real');
     var answer = '';
-    for (var r = 0; r < MIRROR_GRID.length; r++) {
-        if (r % 2 === 0) {
-            answer += MIRROR_GRID[r].join('');
-        } else {
-            answer += MIRROR_GRID[r].slice().reverse().join('');
-        }
-    }
+    reals.forEach(function(el) {
+        answer += el.textContent.trim();
+    });
 
     var input = document.getElementById('mirror-answer');
     var msg = document.getElementById('mirror-message');
@@ -475,7 +519,7 @@ function checkMirrorAnswer() {
         input.disabled = true;
     } else {
         msg.style.color = 'var(--color-blood-bright)';
-        msg.textContent = '镜面颠倒——不止字反，行亦反。再循蛇形读一遍。';
+        msg.textContent = '残纸经火，只有最上一行能从镜中辨出真形。';
         input.classList.add('shake');
         setTimeout(function() { input.classList.remove('shake'); }, 500);
     }
@@ -546,6 +590,13 @@ function checkOmenAnswer() {
 
 // ===== 页面初始化分发 =====
 document.addEventListener('DOMContentLoaded', function() {
+    initGatedNav();
+    if (document.getElementById('ledger-grid')) {
+        renderLedgerGrid();
+    }
+    if (document.getElementById('mirror-grid')) {
+        renderMirror();
+    }
     if (document.getElementById('map-canvas')) {
         initMap();
     }
