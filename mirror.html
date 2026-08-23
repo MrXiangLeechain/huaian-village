@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>镜书 | 云隐文化研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-mark">云</div>
+            <h1 class="site-title">镜中书</h1>
+            <div class="site-subtitle">沈墨 · 火燎残纸上的倒影字样</div>
+        </header>
+
+        <section class="fade-in">
+            <h2>被火燎过的半页</h2>
+            <div class="document">
+                <div class="document-header">
+                    <span class="document-id">档案编号: HA-1987-0815-丁</span>
+                    <span class="document-classified">残损</span>
+                </div>
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
+                    纸页大半焚毁，残存的四字像是写于镜面——正着看只觉笔画颠倒，唯有借着烛火映在另一面，方能辨其本形。沈墨批注：「镜中之字，反过来念才是真话。」
+                </p>
+
+                <div style="text-align: center; margin: 38px 0 10px;">
+                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 18px;">残纸上的字样（镜面映象）：</div>
+                    <!-- 水平镜像渲染：每个字左右翻转，字序不变；玩家需脑补正字 -->
+                    <div id="mirror-text" style="display: inline-block; transform: scaleX(-1); font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-blood-bright); letter-spacing: 0.3em; line-height: 1.6;">
+                        回头即沉
+                    </div>
+
+                    <div style="margin-top: 32px;">
+                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你从镜中读出的正字（按原顺序）：</label>
+                        <input type="text" class="cipher-input" id="mirror-answer"
+                               placeholder="在此写下你辨出的四字..." autocomplete="off"
+                               style="font-size: 1.1rem; letter-spacing: 0.3em; text-align: center;">
+                        <button class="cipher-submit" style="margin-top: 18px;" onclick="checkMirrorAnswer()">
+                            呈上释文
+                        </button>
+                    </div>
+                    <div class="cipher-message" id="mirror-message" style="margin-top: 16px;"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px; opacity: 0.01; transition: all 1s; pointer-events: none;" id="mirror-hidden-link">
+                    <p class="no-indent" style="color: var(--color-gold); font-size: 0.95rem; letter-spacing: 0.1em;">
+                        纸背还有一道朱砂卦痕，仿佛在等谁来起卦。
+                    </p>
+                    <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                        沈墨在册末写道：「时辰已定，只看天意示于何卦。」
+                    </p>
+                    <a href="omen.html" class="btn">起卦 →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>云隐文化研究所 © 2015-2024 · 内部档案</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>

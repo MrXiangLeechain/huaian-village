@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>残账 | 云隐文化研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-mark">云</div>
+            <h1 class="site-title">残账册页</h1>
+            <div class="site-subtitle">沈墨 · 于村北老槐树下的铁盒中发现</div>
+        </header>
+
+        <section class="fade-in">
+            <h2>失踪者名册（残）</h2>
+            <div class="document">
+                <div class="document-header">
+                    <span class="document-id">档案编号: HA-1987-0815-丙</span>
+                    <span class="document-classified">残损</span>
+                </div>
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
+                    名册大半被水浸毁，仅余红笔圈出的几列数字尚可辨认。沈墨在页边批注：「不知何人所作，但凡数字，皆有所指——像是某种暗号。」
+                </p>
+
+                <div style="text-align: center; margin: 34px 0 10px;">
+                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 14px;">圈注数字（按原册顺序排列）：</div>
+                    <div id="ledger-code" style="font-family: var(--font-mono); font-size: 1.5rem; color: var(--color-blood-bright); letter-spacing: 0.45em; line-height: 2;">
+                        01 02 03 04 05
+                    </div>
+
+                    <button class="cipher-submit" style="margin-top: 26px; display: inline-block; font-size: 0.85rem;" onclick="toggleLedgerNote()">
+                        查看残页注记
+                    </button>
+                    <div id="ledger-note" style="display: none; margin: 18px auto 0; max-width: 460px; padding: 14px 18px; border: 1px dashed var(--color-border); border-radius: 6px; color: var(--color-text-dim); font-size: 0.85rem; line-height: 2; text-align: left;">
+                        沈墨抄录于册背的「译例」残句：<br>
+                        「一为渡，二为口，三为莫，四为回，五为头；六封七禁，八安九槐，十村而尽。」<br>
+                        <span style="color: var(--color-text-faint); font-size: 0.8rem;">——其余数字对应何种字，册页已毁，无从稽考。</span>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你的解读（按数字顺序写出对应汉字）：</label>
+                        <input type="text" class="cipher-input" id="ledger-answer"
+                               placeholder="在此写下你解出的词句..." autocomplete="off"
+                               style="font-size: 1.05rem; letter-spacing: 0.15em;">
+                        <button class="cipher-submit" style="margin-top: 18px;" onclick="checkLedgerAnswer()">
+                            呈上解读
+                        </button>
+                    </div>
+                    <div class="cipher-message" id="ledger-message" style="margin-top: 16px;"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px; opacity: 0.01; transition: all 1s; pointer-events: none;" id="ledger-hidden-link">
+                    <p class="no-indent" style="color: var(--color-gold); font-size: 0.95rem; letter-spacing: 0.1em;">
+                        名册最后一页的朱批：「过此渡口者，莫要回头。」
+                    </p>
+                    <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                        铁盒里还有半页被火燎过的纸，墨迹多已不见，唯余镜中倒影般的字样。
+                    </p>
+                    <a href="mirror.html" class="btn">翻到下一页 →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>云隐文化研究所 © 2015-2024 · 内部档案</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>

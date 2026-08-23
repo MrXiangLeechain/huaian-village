@@ -364,6 +364,119 @@ function typewriterEffect(element) {
     type();
 }
 
+// ===== 残账数字密码：ledger.html =====
+var LEDGER_MAP = {
+    '01': '渡', '02': '口', '03': '莫', '04': '回', '05': '头',
+    '06': '封', '07': '禁', '08': '安', '09': '槐', '10': '村'
+};
+
+function toggleLedgerNote() {
+    var note = document.getElementById('ledger-note');
+    if (note) note.style.display = (note.style.display === 'none' || note.style.display === '') ? 'block' : 'none';
+}
+
+function checkLedgerAnswer() {
+    var codeEl = document.getElementById('ledger-code');
+    var input = document.getElementById('ledger-answer');
+    var msg = document.getElementById('ledger-message');
+    var hidden = document.getElementById('ledger-hidden-link');
+    if (!codeEl || !input || !msg) return;
+
+    // 由页面数字串实时解出答案（不硬编码）
+    var parts = codeEl.textContent.trim().split(/\s+/);
+    var answer = '';
+    for (var i = 0; i < parts.length; i++) {
+        answer += LEDGER_MAP[parts[i]] || '';
+    }
+
+    var guess = input.value.replace(/\s+/g, '');
+    if (guess === answer && guess !== '') {
+        msg.style.color = 'var(--color-gold)';
+        msg.textContent = '名册上的名字，原来是一句告诫。';
+        if (hidden) {
+            hidden.style.opacity = '1';
+            hidden.style.pointerEvents = 'auto';
+        }
+        input.disabled = true;
+    } else {
+        msg.style.color = 'var(--color-blood-bright)';
+        msg.textContent = '数字对不上。再看看册背的译例。';
+        input.classList.add('shake');
+        setTimeout(function() { input.classList.remove('shake'); }, 500);
+    }
+}
+
+// ===== 镜书汉字密码：mirror.html =====
+function checkMirrorAnswer() {
+    var textEl = document.getElementById('mirror-text');
+    var input = document.getElementById('mirror-answer');
+    var msg = document.getElementById('mirror-message');
+    var hidden = document.getElementById('mirror-hidden-link');
+    if (!textEl || !input || !msg) return;
+
+    // 镜像文本的正字即答案（来自页面本体）
+    var answer = textEl.textContent.replace(/\s+/g, '');
+    var guess = input.value.replace(/\s+/g, '');
+
+    if (guess === answer && guess !== '') {
+        msg.style.color = 'var(--color-gold)';
+        msg.textContent = '镜中读出的，是给后来者的警告。';
+        if (hidden) {
+            hidden.style.opacity = '1';
+            hidden.style.pointerEvents = 'auto';
+        }
+        input.disabled = true;
+    } else {
+        msg.style.color = 'var(--color-blood-bright)';
+        msg.textContent = '镜面颠倒，你读反了。';
+        input.classList.add('shake');
+        setTimeout(function() { input.classList.remove('shake'); }, 500);
+    }
+}
+
+// ===== 卦象密码：omen.html =====
+var OMEN_MAP = {
+    '☰': '中', '☷': '元', '☳': '子', '☴': '夜',
+    '☵': '禁', '☲': '封', '☶': '渡', '☱': '安'
+};
+
+function toggleOmenNote() {
+    var note = document.getElementById('omen-note');
+    if (note) note.style.display = (note.style.display === 'none' || note.style.display === '') ? 'block' : 'none';
+}
+
+function checkOmenAnswer() {
+    var guaWrap = document.getElementById('omen-gua');
+    var input = document.getElementById('omen-answer');
+    var msg = document.getElementById('omen-message');
+    var hidden = document.getElementById('omen-hidden-link');
+    if (!guaWrap || !input || !msg) return;
+
+    // 由页面卦象序列（自左向右）实时解出时辰（不硬编码）
+    var guaEls = guaWrap.querySelectorAll('.gua');
+    var answer = '';
+    for (var i = 0; i < guaEls.length; i++) {
+        var g = guaEls[i].getAttribute('data-gua');
+        answer += OMEN_MAP[g] || '';
+    }
+
+    var guess = input.value.replace(/\s+/g, '');
+    if (guess === answer && guess !== '') {
+        msg.style.color = 'var(--color-gold)';
+        msg.textContent = '天意所示，时辰已定。';
+        if (hidden) {
+            hidden.style.opacity = '1';
+            hidden.style.pointerEvents = 'auto';
+        }
+        input.disabled = true;
+    } else {
+        msg.style.color = 'var(--color-blood-bright)';
+        msg.textContent = '卦象连读有误。顺序，本就在画里。';
+        input.classList.add('shake');
+        setTimeout(function() { input.classList.remove('shake'); }, 500);
+    }
+}
+
 // ===== 页面初始化分发 =====
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('map-canvas')) {

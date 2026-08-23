@@ -16,11 +16,11 @@
 
         <nav class="nav-bar">
             <a href="index.html">首页</a>
-            <a href="about.html">关于我们</a>
-            <a href="projects.html">研究项目</a>
             <a href="events.html">学术活动</a>
             <a href="publications.html">出版物</a>
+            <a href="about.html">关于我们</a>
             <a href="contact.html">联系我们</a>
+            <a href="projects.html" class="nav-gated" style="display:none;">研究项目</a>
         </nav>
 
         <section class="fade-in">
@@ -47,21 +47,22 @@
                     本项目旨在通过田野调查、口述史采集和文献分析，还原槐安村消失事件的真相。截至目前，已进行三轮实地调查，采集口述资料12份，发现多份与事件相关的民间文献。
                 </p>
                 <p>
-                    <strong>注：</strong>沈墨研究员的研究日志已上传至内部系统。查阅需输入项目编号中的数字部分作为访问密码。
+                    <strong>项目编号格式说明：</strong>HAC（槐安村缩写）- 年份 - 月日。访问密码取编号中的⬛⬛⬛部分，去除连字符。
                 </p>
                 <p>
-                    <strong>项目编号格式说明：</strong>HAC（槐安村缩写）- 年份 - 月日。访问密码取编号中的纯数字部分，去除连字符。
+                    <strong>注：</strong>沈墨研究员的研究日志已上传至内部系统。
                 </p>
+
             </div>
             <!-- 隐藏入口：需点击按钮或悬停特定区域才显现 -->
             <div style="margin-top: 16px; padding: 14px; border: 1px dashed var(--color-border); border-radius: 6px;">
                 <div id="projects-hotspot" onmouseenter="revealProjectsLink()"
                      style="cursor: help; color: var(--color-text-faint); font-size: 0.82rem; user-select: none; line-height: 1.8;">
-                    〔 档案边缘有一行似乎被反复涂抹过的手写批注……把鼠标移到这里，或点下方按钮，让它显形 〕
+                    〔 档案边缘有一行似乎被反复涂抹过的手写批注……把鼠标⬛到这里，或⬛⬛⬛⬛⬛，让它显形 〕
                 </div>
                 <button class="cipher-submit" style="margin-top: 12px; font-size: 0.85rem;" onclick="revealProjectsLink()">查看被涂抹的批注</button>
                 <div id="projects-hidden-link" style="margin-top: 12px; opacity: 0.01; transition: all 0.8s; pointer-events: none;">
-                    <a href="journal.html" class="btn">沈墨的日志 →</a>
+                    <a href="journal.html" class="btn">沈墨的日志</a>
                 </div>
             </div>
         </div>

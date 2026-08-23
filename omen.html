@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卦痕 | 云隐文化研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-mark">云</div>
+            <h1 class="site-title">卦痕</h1>
+            <div class="site-subtitle">沈墨 · 残纸背面的朱砂卦象</div>
+        </header>
+
+        <section class="fade-in">
+            <h2>朱砂四卦</h2>
+            <div class="document">
+                <div class="document-header">
+                    <span class="document-id">档案编号: HA-1987-0815-戊</span>
+                    <span class="document-classified">残损</span>
+                </div>
+                <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
+                    残纸背面以朱砂画下四道卦象，旁注「天意所示，时辰即藏其中」。沈墨另纸录有卦象对应的字例，却未言明四卦当依何序连读——他说：「顺序，本就在画里。」
+                </p>
+
+                <div style="text-align: center; margin: 34px 0 10px;">
+                    <div style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 16px;">朱砂卦象（按原纸自左向右）：</div>
+                    <div id="omen-gua" style="font-size: 2.4rem; color: var(--color-gold); letter-spacing: 0.4em; line-height: 1.6;">
+                        <span class="gua" data-gua="☰">☰</span>
+                        <span class="gua" data-gua="☷">☷</span>
+                        <span class="gua" data-gua="☳">☳</span>
+                        <span class="gua" data-gua="☴">☴</span>
+                    </div>
+
+                    <button class="cipher-submit" style="margin-top: 26px; display: inline-block; font-size: 0.85rem;" onclick="toggleOmenNote()">
+                        查看沈墨的卦例
+                    </button>
+                    <div id="omen-note" style="display: none; margin: 18px auto 0; max-width: 460px; padding: 14px 18px; border: 1px dashed var(--color-border); border-radius: 6px; color: var(--color-text-dim); font-size: 0.85rem; line-height: 2; text-align: left;">
+                        沈墨抄录的卦字对应（节选自《禁卷》第十三页）：<br>
+                        「☰ 为 中　☷ 为 元　☳ 为 子　☴ 为 夜<br>
+                        ☵ 为 禁　☲ 为 封　☶ 为 渡　☱ 为 安」
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">天意所示之时辰（按卦象自左向右连读）：</label>
+                        <input type="text" class="cipher-input" id="omen-answer"
+                               placeholder="在此写下四字时辰..." autocomplete="off"
+                               style="font-size: 1.05rem; letter-spacing: 0.2em; text-align: center;">
+                        <button class="cipher-submit" style="margin-top: 18px;" onclick="checkOmenAnswer()">
+                            呈上卦解
+                        </button>
+                    </div>
+                    <div class="cipher-message" id="omen-message" style="margin-top: 16px;"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px; opacity: 0.01; transition: all 1s; pointer-events: none;" id="omen-hidden-link">
+                    <p class="no-indent" style="color: var(--color-gold); font-size: 0.95rem; letter-spacing: 0.1em;">
+                        时辰既定——中元子夜，村北老槐，封印之门将启。
+                    </p>
+                    <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
+                        沈墨最后一行：「地图我画好了，三个记号，便是门轴所在。去吧。」
+                    </p>
+                    <a href="map.html" class="btn">前往地图室 →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>云隐文化研究所 © 2015-2024 · 内部档案</p>
+        </footer>
+    </div>
+
+    <script src="js/arg.js"></script>
+</body>
+</html>
