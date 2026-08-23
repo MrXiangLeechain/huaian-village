@@ -29,10 +29,15 @@
 
         <!-- 密码输入区 -->
         <div class="cipher-input-area fade-in-delay-1" id="journal-lock-area">
-            <label>请输入访问密码（项目编号中的数字部分）</label>
+            <label>请输入访问密码</label>
             <input type="text" class="cipher-input" id="journal-password"
                    placeholder="输入密码..." autocomplete="off">
             <button class="cipher-submit" onclick="checkJournalPassword()">解锁日志</button>
+            <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.82rem; margin-top: 14px; text-align: center;">
+                锁屏上贴着一张便签，是沈墨的字迹：<br>
+                "我用的还是那个老日子——一切开始、也是一切结束的日子。<br>
+                它一直挂在我登记的项目上，从未换过。"
+            </p>
             <div class="cipher-message" id="journal-message"></div>
         </div>
 

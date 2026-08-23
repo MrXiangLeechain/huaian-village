@@ -109,25 +109,44 @@ function caesarShift(text, shift) {
     return result;
 }
 
-function decodeLetterCipher() {
+// 展开/收起周然所长的破译笔记（凯撒密码提示）
+function toggleLetterHint() {
+    var hint = document.getElementById('letter-hint');
+    if (!hint) return;
+    hint.style.display = (hint.style.display === 'none') ? 'block' : 'none';
+}
+
+// 玩家自行解密后输入译文，验证通过才放行
+function checkLetterAnswer() {
+    var input = document.getElementById('letter-answer');
+    var msg = document.getElementById('cipher-message');
     var cipherText = document.getElementById('cipher-text');
-    if (!cipherText) return;
+    if (!input || !msg) return;
 
-    var raw = cipherText.textContent.trim();
-    // 凯撒密码，位移 7（正向解密 = 位移 -7）
-    var decoded = caesarShift(raw, -7);
-
-    var output = document.getElementById('cipher-decoded');
-    if (output) {
-        output.textContent = decoded;
-        output.style.opacity = '1';
+    // 标准答案：对密文做位移 -7 解密（不硬编码，密文改了答案自动跟着变）
+    var answer = '';
+    if (cipherText) {
+        answer = caesarShift(cipherText.textContent.trim(), -7);
     }
 
-    var hidden = document.getElementById('letter-hidden-link');
-    if (hidden) {
-        hidden.style.opacity = '1';
-        hidden.style.pointerEvents = 'auto';
-        hidden.style.fontSize = '0.9rem';
+    // 归一化：去首尾空格、压成单空格、统一大写
+    var guess = input.value.trim().toUpperCase().replace(/\s+/g, ' ');
+    var target = answer.trim().toUpperCase().replace(/\s+/g, ' ');
+
+    if (guess === target && guess !== '') {
+        msg.style.color = 'var(--color-gold)';
+        msg.textContent = '译文无误。沈墨的嘱托已为你敞开。';
+        input.disabled = true;
+
+        var hidden = document.getElementById('letter-hidden-link');
+        if (hidden) {
+            hidden.style.opacity = '1';
+            hidden.style.pointerEvents = 'auto';
+        }
+    } else {
+        msg.textContent = '译文有误。再想想那位罗马人的把戏。';
+        input.classList.add('shake');
+        setTimeout(function() { input.classList.remove('shake'); }, 500);
     }
 }
 
@@ -214,10 +233,31 @@ function checkCipherPassword() {
 var ritualSequence = [];
 var ritualCorrect = ['香烛', '引魂幡', '纸船', '河灯', '纸钱'];
 
+// 祭品位置随机洗牌（页面加载时、仪式失败重置时各执行一次）
+function shuffleRitualItems() {
+    var circle = document.querySelector('.ritual-circle');
+    if (!circle) return;
+    var items = Array.prototype.slice.call(circle.querySelectorAll('.ritual-item'));
+    // Fisher-Yates 洗牌
+    for (var i = items.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = items[i];
+        items[i] = items[j];
+        items[j] = tmp;
+    }
+    // 按新顺序重新插入
+    items.forEach(function(item) {
+        circle.appendChild(item);
+    });
+}
+
 function initRitual() {
     var items = document.querySelectorAll('.ritual-item');
     var message = document.getElementById('ritual-message');
     var dots = document.querySelectorAll('.sequence-dot');
+
+    // 每次进入页面，祭品位置随机排列
+    shuffleRitualItems();
 
     items.forEach(function(item) {
         item.addEventListener('click', function() {
@@ -257,7 +297,9 @@ function initRitual() {
                     ritualSequence = [];
                     items.forEach(function(el) { el.classList.remove('lit'); });
                     dots.forEach(function(dot) { dot.classList.remove('active'); });
-                    message.textContent = '重新开始仪式...';
+                    // 仪式失败后，祭品位置重新随机排列
+                    shuffleRitualItems();
+                    message.textContent = '重新开始仪式...（祭品已挪动了位置）';
                     message.style.color = 'var(--color-text-dim)';
                 }, 2000);
             }

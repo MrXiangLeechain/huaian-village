@@ -88,20 +88,41 @@
                     <span class="document-classified">已解密</span>
                 </div>
                 <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.9rem;">
-                    以下为沈墨信件末尾附加的加密文字。据周然所长回忆，这是他与沈墨之间的私人文字游戏——"移位的字母"。
+                    以下为沈墨信件末尾附加的加密文字。据周然所长回忆，这是他与沈墨之间的私人文字游戏——"移位的字母"。译不出这段话，就读不懂他留下的嘱托。
                 </p>
 
                 <div style="text-align: center; margin: 30px 0;">
                     <div id="cipher-text" style="font-family: var(--font-mono); font-size: 1.15rem; color: var(--color-blood-bright); letter-spacing: 0.15em; line-height: 2;">
                         AOL THW YLTLTILYZ HSS
                     </div>
-                    <button class="cipher-submit" style="margin-top: 24px;" onclick="decodeLetterCipher()">
-                        移位七位 · 解密
+
+                    <!-- 独立提示：点击展开 -->
+                    <button class="cipher-submit" style="margin-top: 24px; display: inline-block; font-size: 0.85rem;" onclick="toggleLetterHint()">
+                        查看周然所长的破译笔记
                     </button>
-                    <div id="cipher-decoded" style="margin-top: 20px; font-family: var(--font-mono); font-size: 1.05rem; color: var(--color-gold); opacity: 0; transition: opacity 0.8s; letter-spacing: 0.12em;"></div>
+                    <div id="letter-hint" style="display: none; margin: 18px auto 0; max-width: 420px; padding: 14px 18px; border: 1px dashed var(--color-border); border-radius: 6px; color: var(--color-text-dim); font-size: 0.85rem; line-height: 1.9;">
+                        周然批注：<br>
+                        "是那位罗马人的老把戏——把字母表整个向后转动，同一个字母永远代替另一个字母。<br>
+                        那孩子痴迷此道，总念叨'七步之内，必有真相'。连在所里开会，他都只坐第七排。"
+                    </div>
+
+                    <!-- 玩家自行解密后输入 -->
+                    <div style="margin-top: 28px;">
+                        <label style="display: block; font-size: 0.88rem; color: var(--color-gold-dim); margin-bottom: 10px;">你的译文（英文原文，大小写不限）：</label>
+                        <input type="text" class="cipher-input" id="letter-answer"
+                               placeholder="在此写下你解出的句子..." autocomplete="off"
+                               style="font-size: 1rem;">
+                        <button class="cipher-submit" style="margin-top: 18px;" onclick="checkLetterAnswer()">
+                            呈上译文
+                        </button>
+                    </div>
+                    <div class="cipher-message" id="cipher-message" style="margin-top: 16px;"></div>
                 </div>
 
                 <div style="text-align: center; margin-top: 30px; opacity: 0.01; transition: all 1s; pointer-events: none;" id="letter-hidden-link">
+                    <p class="no-indent" style="color: var(--color-gold); font-size: 0.95rem; letter-spacing: 0.1em;">
+                        "THE MAP REMEMBERS ALL"——地图记得一切。
+                    </p>
                     <p class="no-indent" style="color: var(--color-text-dim); font-size: 0.85rem;">
                         "老地方"——沈墨和周然约定存放资料的位置。周然所长的批注：地图室。
                     </p>
