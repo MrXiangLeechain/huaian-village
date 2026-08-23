@@ -13,6 +13,9 @@ arg-huaian-village/
 ├── index.html          ← 表层入口：云隐文化研究所首页
 ├── about.html          ← 表层：关于我们
 ├── projects.html       ← 表层→中间层桥接：研究项目（含日志密码）
+├── events.html         ← 表层：学术活动（带宣传广告）
+├── publications.html   ← 表层：出版物（幌子 / 埋DOI线索）
+├── contact.html        ← 表层：联系我们（幌子 / 埋数字与坐标线索）
 ├── journal.html        ← 中间层：沈墨的日志（密码保护）
 ├── archive.html        ← 中间层：档案室（摩斯密码）
 ├── letters.html        ← 中间层：信件（凯撒密码）
@@ -35,7 +38,7 @@ arg-huaian-village/
 
 | 层级 | 页面 | 玩家体验 |
 |------|------|----------|
-| **表层 Surface** | index / about / projects | 伪装成正常的"云隐文化研究所"官网，隐藏入口在源代码注释中 |
+| **表层 Surface** | index / about / projects / events / publications / contact | 伪装成正常的"云隐文化研究所"官网；events 含学术活动广告，publications 与 contact 为幌子页面并埋藏辅助线索 |
 | **中间层 Discovery** | journal / archive / letters / map | 日志密码、摩斯密码、凯撒密码、地图标记，逐步揭示异常 |
 | **深层 Rabbit Hole** | cipher / ritual / timeline / truth / finale | 关键词解锁、仪式顺序谜题、完整故事与最终反转 |
 
@@ -43,6 +46,7 @@ arg-huaian-village/
 
 > ⚠️ 以下为完整剧透，玩家请勿阅读
 
+0. **events.html / publications.html / contact.html**（可选幌子） → 三个扩展的表层页面让研究所网站更像真实机构。`events.html` 中的第四届民俗记忆论坛广告暗藏"中元特别场"、"槐花镇文化中心"、公众号回复"槐安"等氛围信息；`publications.html` 的 DOI `10.19815/hac.19870815`、ISBN `978-7-1987-0815-3` 与论文标题中的 `Letters`、`Map`、`Ritual Objects` 等关键词为额外线索；`contact.html` 的电话 `0556-19870815`、地址门牌 `1987号`、公众号 ID `YUNYIN-0815` 等数字与编号信息相互印证，供细心玩家交叉验证密码来源。
 1. **index.html** → 查看网页源代码，HTML 注释中发现入口：`/projects.html`
 2. **projects.html** → 槐安村项目卡片的"项目编号: HAC-1987-0815"提示格式；数字部分 `19870815` 即日志密码；页面底部隐藏入口**不靠肉眼扫低透明度文字**，而是需**点击"查看被涂抹的批注"按钮或悬停标注区域**才显现，指向 `journal.html`
 3. **journal.html** → 输入密码 `19870815` 解锁沈墨日志；锁屏便签**不明说密码来源**，只以沈墨口吻暗示"那个一切开始也是一切结束的日子，一直挂在登记的项目上"——引导玩家自行回 projects.html 查看项目编号；日志末尾指向档案室；日志中埋下仪式线索①"先燃香烛，以通阴阳"
