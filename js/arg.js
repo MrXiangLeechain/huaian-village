@@ -856,19 +856,32 @@ function initDeepBlocks() {
 }
 
 // ===== 首页欢迎弹窗：index.html =====
-// 每个会话仅弹一次（sessionStorage 标记），点击"进入研究所"关闭
+// 每次进入首页都弹出（确保一定能看到），点击"进入研究所"关闭
 function initWelcomeModal() {
     var overlay = document.getElementById('welcome-overlay');
     if (!overlay) return;
-    var seen = false;
-    try { seen = sessionStorage.getItem('welcome_seen') === '1'; } catch (e) {}
-    if (!seen) {
-        overlay.classList.add('show');
-        try { sessionStorage.setItem('welcome_seen', '1'); } catch (e) {}
-    }
+    overlay.classList.add('show');
     window.closeWelcome = function () {
         overlay.classList.remove('show');
     };
+}
+
+// ===== 首页访问量兜底：index.html =====
+// 优先用不蒜子真实统计；若 2.5s 内未填充（被墙/离线），用本地自增计数兜底
+function initVisitorCounter() {
+    var el = document.getElementById('busuanzi_value_site_pv');
+    if (!el) return;
+    setTimeout(function () {
+        var v = parseInt(el.textContent, 10);
+        if (!v || isNaN(v)) {
+            var n = 327; // 呼应"327名村民"设定的起始基数
+            try {
+                n = parseInt(localStorage.getItem('huaian_visits') || '327', 10) + 1;
+                localStorage.setItem('huaian_visits', String(n));
+            } catch (e) {}
+            el.textContent = n;
+        }
+    }, 2500);
 }
 
 // ===== 页面初始化分发 =====
@@ -898,4 +911,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     initDeepBlocks();
     initWelcomeModal();
+    initVisitorCounter();
 });
