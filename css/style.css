@@ -28,6 +28,51 @@
     --font-mono: "Courier New", monospace;
 }
 
+/* --- 三层色阶：表层（浅）→ 中间层（深）→ 深层（最暗，保持现状） --- */
+
+/* 表层：比现状调亮一档，像正常的民俗研究所网站 */
+body.layer-surface {
+    --bg-primary: #1b1512;
+    --bg-secondary: #251d18;
+    --bg-card: #2c231c;
+    --bg-paper: #332920;
+    --color-text: #d9cfbd;
+    --color-text-dim: #8c7f6f;
+    --color-text-faint: #5b5149;
+    --color-border: #3e332b;
+    --color-white: #efe6d4;
+}
+
+/* 中间层：介于表层（亮）与深层（暗）之间 */
+body.layer-middle {
+    --bg-primary: #130e0b;
+    --bg-secondary: #1a140f;
+    --bg-card: #201a14;
+    --bg-paper: #251d15;
+    --color-text: #cbc0ae;
+    --color-text-dim: #796e61;
+    --color-text-faint: #4a4139;
+    --color-border: #322a22;
+    --color-white: #e2d7c4;
+}
+
+/* 深层：保持 :root 现状（最暗），不覆盖变量 */
+
+/* 深层背景：暗红色随机方块 */
+#deep-blocks {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+#deep-blocks .db {
+    position: absolute;
+    background: var(--color-blood);
+    border-radius: 2px;
+    filter: blur(0.3px);
+}
+
 html {
     scroll-behavior: smooth;
 }

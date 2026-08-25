@@ -9,7 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== 内部登录与受限导航 =====
 function initGatedNav() {
-    var loggedIn = sessionStorage.getItem('yunyin_login') === '1';
+    var loggedIn = false;
+    try {
+        loggedIn = sessionStorage.getItem('yunyin_login') === '1';
+    } catch (e) {
+        loggedIn = false; // 隐私模式 / 无 sessionStorage 时降级为未登录
+    }
     var gated = document.querySelectorAll('.nav-gated');
     gated.forEach(function(link) {
         link.style.display = loggedIn ? '' : 'none';
@@ -38,7 +43,7 @@ function doLogin() {
     // 管理员账号：yunyin（所内简称，三小写拼音——实际为 "云隐" 拼音首段）
     // 密码：19870815（槐安村项目编号 HAC-1987-0815 中的数字部分，即“老项目的生日”）
     if (user === 'yunyin' && pass === '19870815') {
-        sessionStorage.setItem('yunyin_login', '1');
+        try { sessionStorage.setItem('yunyin_login', '1'); } catch (e) {}
         msg.style.color = 'var(--color-gold)';
         msg.textContent = '身份验证通过。';
         initGatedNav();
@@ -782,7 +787,7 @@ function initRandom404Jumps() {
 
         if (Math.random() < JUMP_CHANCE) {
             e.preventDefault();
-            sessionStorage.setItem('yunyin_intended_href', href);
+            try { sessionStorage.setItem('yunyin_intended_href', href); } catch (e) {}
             location.href = '404.html';
         }
     });
@@ -828,6 +833,28 @@ function initTruthAudio() {
     });
 }
 
+// ===== 深层背景：暗红色随机大小方块 =====
+// 仅深层页面（body.layer-deep）生效；每次进入随机生成，营造血渍/封印纹理
+function initDeepBlocks() {
+    if (!document.body.classList.contains('layer-deep')) return;
+    var container = document.createElement('div');
+    container.id = 'deep-blocks';
+    document.body.appendChild(container);
+
+    var count = 46; // 方块数量
+    for (var i = 0; i < count; i++) {
+        var b = document.createElement('div');
+        b.className = 'db';
+        var size = 18 + Math.floor(Math.random() * 130);      // 18–148px
+        b.style.width = size + 'px';
+        b.style.height = size + 'px';
+        b.style.left = (Math.random() * 100).toFixed(2) + '%';
+        b.style.top = (Math.random() * 100).toFixed(2) + '%';
+        b.style.opacity = (0.04 + Math.random() * 0.14).toFixed(3); // 0.04–0.18 极淡
+        container.appendChild(b);
+    }
+}
+
 // ===== 页面初始化分发 =====
 document.addEventListener('DOMContentLoaded', function() {
     initGatedNav();
@@ -853,4 +880,5 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.audio-play')) {
         initTruthAudio();
     }
+    initDeepBlocks();
 });
