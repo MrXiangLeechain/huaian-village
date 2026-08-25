@@ -855,6 +855,22 @@ function initDeepBlocks() {
     }
 }
 
+// ===== 首页欢迎弹窗：index.html =====
+// 每个会话仅弹一次（sessionStorage 标记），点击"进入研究所"关闭
+function initWelcomeModal() {
+    var overlay = document.getElementById('welcome-overlay');
+    if (!overlay) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem('welcome_seen') === '1'; } catch (e) {}
+    if (!seen) {
+        overlay.classList.add('show');
+        try { sessionStorage.setItem('welcome_seen', '1'); } catch (e) {}
+    }
+    window.closeWelcome = function () {
+        overlay.classList.remove('show');
+    };
+}
+
 // ===== 页面初始化分发 =====
 document.addEventListener('DOMContentLoaded', function() {
     initGatedNav();
@@ -881,4 +897,5 @@ document.addEventListener('DOMContentLoaded', function() {
         initTruthAudio();
     }
     initDeepBlocks();
+    initWelcomeModal();
 });
