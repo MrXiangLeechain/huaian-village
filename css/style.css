@@ -221,6 +221,26 @@ a:hover {
     margin-bottom: 12px;
 }
 
+.audio-play {
+    margin-left: 12px;
+    padding: 3px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-gold);
+    background: transparent;
+    border: 1px solid var(--color-gold-dim);
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: all 0.25s;
+}
+
+.audio-play:hover {
+    color: var(--color-bg-deep);
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
 .journal-entry .entry-title {
     font-size: 1.1rem;
     color: var(--color-blood-bright);

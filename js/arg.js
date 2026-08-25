@@ -788,6 +788,46 @@ function initRandom404Jumps() {
     });
 }
 
+// ===== 真相页录音播放：truth.html =====
+// 每段录音配一个按钮，点击播放/暂停；同一时间只播一段；不自动播放
+function initTruthAudio() {
+    var btns = document.querySelectorAll('.audio-play');
+    btns.forEach(function (btn) {
+        var src = btn.getAttribute('data-audio');
+        if (!src) return;
+        var audio = new Audio(src);
+        audio.preload = 'none';
+        btn._audio = audio;
+
+        btn.addEventListener('click', function () {
+            // 暂停其它正在播放的段落
+            document.querySelectorAll('.audio-play').forEach(function (other) {
+                if (other !== btn && other._audio && !other._audio.paused) {
+                    other._audio.pause();
+                    other.textContent = '▶ 播放这段';
+                }
+            });
+            if (audio.paused) {
+                var p = audio.play();
+                if (p && p.catch) {
+                    p.catch(function () { /* 文件缺失或被浏览器拦截时静默 */ });
+                }
+                btn.textContent = '⏸ 暂停';
+            } else {
+                audio.pause();
+                btn.textContent = '▶ 播放这段';
+            }
+        });
+
+        audio.addEventListener('ended', function () {
+            btn.textContent = '▶ 播放这段';
+        });
+        audio.addEventListener('error', function () {
+            btn.textContent = '✕ 录音缺失';
+        });
+    });
+}
+
 // ===== 页面初始化分发 =====
 document.addEventListener('DOMContentLoaded', function() {
     initGatedNav();
@@ -809,5 +849,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (document.querySelector('.ritual-item')) {
         initRitual();
+    }
+    if (document.querySelector('.audio-play')) {
+        initTruthAudio();
     }
 });
