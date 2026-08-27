@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云隐邮件系统 | 槐安村事件</title>
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <style>
+        .mail-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 16px 60px;
+        }
+        .mail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 8px 8px 0 0;
+            border-bottom: 2px solid var(--color-blood);
+        }
+        .mail-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mail-logo {
+            width: 34px;
+            height: 34px;
+            background: var(--color-blood);
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-weight: bold;
+            font-family: var(--font-serif);
+        }
+        .mail-title {
+            font-size: 1.1rem;
+            color: var(--color-gold);
+            letter-spacing: 0.08em;
+        }
+        .mail-user {
+            font-size: 0.82rem;
+            color: var(--color-text-dim);
+        }
+        .mail-user strong {
+            color: var(--color-text);
+            font-weight: normal;
+        }
+        .mail-body {
+            display: flex;
+            min-height: 520px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+        .mail-sidebar {
+            width: 180px;
+            background: var(--bg-primary);
+            border-right: 1px solid var(--color-border);
+            padding: 18px 0;
+            flex-shrink: 0;
+        }
+        .mail-folder {
+            padding: 10px 20px;
+            font-size: 0.88rem;
+            color: var(--color-text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mail-folder:hover {
+            background: rgba(196, 163, 90, 0.06);
+            color: var(--color-text);
+        }
+        .mail-folder.active {
+            background: rgba(196, 163, 90, 0.12);
+            color: var(--color-gold);
+            border-left: 3px solid var(--color-blood);
+        }
+        .mail-folder .count {
+            font-size: 0.72rem;
+            background: var(--color-blood);
+            color: var(--color-white);
+            padding: 1px 6px;
+            border-radius: 10px;
+        }
+        .mail-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .mail-toolbar {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text-dim);
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .mail-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .mail-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--color-border);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .mail-item:hover {
+            background: rgba(196, 163, 90, 0.05);
+        }
+        .mail-item.unread {
+            background: rgba(196, 163, 90, 0.04);
+        }
+        .mail-item.unread .mail-subject {
+            color: var(--color-white);
+        }
+        .mail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+        .mail-sender {
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+        .mail-date {
+            font-size: 0.72rem;
+            color: var(--color-text-faint);
+            font-family: var(--font-mono);
+        }
+        .mail-subject {
+            font-size: 0.95rem;
+            color: var(--color-text-dim);
+            margin-bottom: 4px;
+        }
+        .mail-preview {
+            font-size: 0.8rem;
+            color: var(--color-text-faint);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mail-detail {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+        .mail-detail-header {
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .mail-detail-subject {
+            font-size: 1.15rem;
+            color: var(--color-gold);
+            margin-bottom: 12px;
+        }
+        .mail-detail-meta {
+            font-size: 0.82rem;
+            color: var(--color-text-dim);
+            line-height: 1.7;
+        }
+        .mail-detail-body {
+            padding: 22px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.9;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .mail-detail-body .redacted {
+            background: var(--color-text-faint);
+            color: transparent;
+            border-radius: 2px;
+            padding: 0 4px;
+            user-select: none;
+        }
+        .mail-back {
+            margin-top: 14px;
+            font-size: 0.82rem;
+            color: var(--color-gold-dim);
+            cursor: pointer;
+            display: inline-block;
+        }
+        .mail-back:hover {
+            color: var(--color-gold);
+        }
+        .mail-empty {
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--color-text-faint);
+            font-size: 0.86rem;
+        }
+
+        /* 新邮件提示 toast */
+        #mail-toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--bg-card);
+            border: 1px solid var(--color-blood);
+            color: var(--color-text);
+            padding: 12px 22px;
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 60;
+            font-size: 0.85rem;
+            box-shadow: 0 0 24px rgba(139, 26, 26, 0.35);
+            pointer-events: none;
+            max-width: 90vw;
+        }
+        #mail-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* 发送失败的邮件（红色标记） */
+        .mail-item.failed {
+            border-left: 3px solid var(--color-blood-bright);
+            background: rgba(196, 30, 58, 0.06);
+        }
+        .mail-item.failed .mail-sender,
+        .mail-item.failed .mail-subject {
+            color: var(--color-blood-bright);
+        }
+        .mail-item.failed .mail-preview {
+            color: var(--color-blood-bright);
+            opacity: 0.85;
+        }
+        .mail-failed-note {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border: 1px solid var(--color-blood-bright);
+            color: var(--color-blood-bright);
+            font-size: 0.82rem;
+            line-height: 1.7;
+            border-radius: 4px;
+            background: rgba(196, 30, 58, 0.05);
+        }
+
+        /* 弹窗输入框微调 */
+        #username-input {
+            text-align: center;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+        }
+        #username-input.invalid {
+            border-color: var(--color-blood-bright);
+            box-shadow: 0 0 10px rgba(196, 30, 58, 0.25);
+        }
+        #username-error {
+            color: var(--color-blood-bright);
+            font-size: 0.78rem;
+            min-height: 1.4em;
+        }
+    </style>
+</head>
+<body class="layer-middle">
+
+    <!-- 用户名弹窗 -->
+    <div id="username-overlay" class="welcome-overlay show">
+        <div class="welcome-box" style="max-width: 360px;">
+            <h2>云隐邮件系统</h2>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 2px; margin: 22px 0 8px;">
+                <span style="color: var(--color-text-dim); font-size: 1.15rem;">【</span>
+                <input type="text" id="username-input" class="cipher-input" style="width: 160px; text-align: center; margin: 0;" placeholder="4-16位" maxlength="16" autocomplete="off">
+                <span style="color: var(--color-text-dim); font-size: 1.15rem;">】</span>
+                <span style="color: var(--color-text-dim); font-size: 0.85rem; margin-left: 3px;">@yunyin-1987.org</span>
+            </div>
+            <p style="font-size: 0.72rem; color: var(--color-text-faint); margin: 0 0 12px; letter-spacing: 0.03em;">4-16位英文大小写和数字</p>
+            <div id="username-error"></div>
+            <button class="btn" onclick="enterMail()" style="margin-top: 6px;">进入邮箱</button>
+            <p style="font-size: 0.65rem; color: var(--color-text-faint); margin-top: 14px; letter-spacing: 0.05em;">V0.1.5 · INTERNAL USE ONLY</p>
+        </div>
+    </div>
+
+    <!-- 引导写邮件给沈墨的弹窗 -->
+    <div id="shenmo-prompt-overlay" class="welcome-overlay" style="display:none;">
+        <div class="welcome-box" style="max-width: 380px;">
+            <h2 style="font-size: 1.35rem;">要不去问问沈墨？</h2>
+            <p style="font-size: 0.85rem; color: var(--color-text-dim); margin: 18px 0 20px; line-height: 1.9;">
+                权限有了，档案也调到了。<br>
+                可那 326 个名字之外的事，档案不会告诉你。<br>
+                沈墨是最后一个接触真相的人——<br>
+                也许，该给他写点什么。
+            </p>
+            <button class="btn" onclick="closeShenmoPrompt()">去写一封信</button>
+        </div>
+    </div>
+
+    <!-- 邮箱主界面 -->
+    <div class="mail-wrapper" id="mail-app" style="display:none;">
+        <header class="mail-header">
+            <div class="mail-brand">
+                <div class="mail-logo">隐</div>
+                <div class="mail-title">云隐邮件系统</div>
+            </div>
+            <div class="mail-user">
+                当前账号：<strong id="display-username">unknown</strong>
+                <span style="margin-left: 16px; cursor: pointer; color: var(--color-text-faint);" onclick="logoutMail()">[退出]</span>
+            </div>
+        </header>
+
+        <div class="mail-body">
+            <aside class="mail-sidebar">
+                <div class="mail-folder active" data-folder="inbox" onclick="switchFolder('inbox')">
+                    <span>收件箱</span>
+                    <span class="count" id="inbox-count">1</span>
+                </div>
+                <div class="mail-folder" data-folder="sent" onclick="switchFolder('sent')">
+                    <span>已发送</span>
+                </div>
+                <div class="mail-folder" data-folder="drafts" onclick="switchFolder('drafts')">
+                    <span>草稿箱</span>
+                </div>
+                <div class="mail-folder" data-folder="trash" onclick="switchFolder('trash')">
+                    <span>垃圾箱</span>
+                </div>
+            </aside>
+
+            <main class="mail-main">
+                <div class="mail-toolbar">
+                    <span id="folder-name">收件箱</span>
+                    <span id="mail-total">共 4 封</span>
+                </div>
+
+                <div class="mail-list" id="mail-list"></div>
+
+                <div class="mail-detail" id="mail-detail">
+                    <div class="mail-detail-header">
+                        <div class="mail-detail-subject" id="detail-subject"></div>
+                        <div class="mail-detail-meta" id="detail-meta"></div>
+                        <div class="mail-back" onclick="backToList()">← 返回邮件列表</div>
+                    </div>
+                    <div class="mail-detail-body" id="detail-body"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 新邮件提示 -->
+    <div id="mail-toast"></div>
+
+    <script src="js/arg.js?v=5"></script>
+    <script>
+        (function() {
+            const USERNAME_KEY = 'huaian_mail_user';
+            let currentFolder = 'inbox';
+            let currentUser = '';
+            let currentUserEmail = '';
+
+            // 致沈墨的邮件：收到档案室回复后才出现在草稿箱
+            const SHENMO_DRAFT = {
+                id: 'd1',
+                sender: '我',
+                recipient: 'shenmo@yunyin-1987.org',
+                subject: '致沈墨',
+                date: '2024-05-22 01:04',
+                preview: '沈老师，您已经失联六周了。如果您能看到这封邮件……',
+                body: '沈老师：\n\n您已经失联六周了。\n\n研究所对外说您还在进行田野调查，但我知道您最后一条录音的日期停在 2024-03-18。\n\n如果您能看到这封邮件，请回复。\n\n我找到了一些您没来得及归档的东西。'
+            };
+
+            // 4 月 2 日及之后的邮件：不在初始收件箱，待调阅申请回复后依次到达
+            const M3 = {
+                id: 'm3',
+                sender: '档案室',
+                email: 'archive@yunyin-1987.org',
+                subject: '关于 1987-07-15 事件卷宗的补充说明',
+                date: '2024-04-02 14:30',
+                preview: '卷宗编号 HAC-1987-0815 已归档。部分页面因年代久远无法辨识。',
+                body: '研究员您好：\n\n您申请调阅的《槐安村 1987-07-15 人口失踪事件》卷宗（编号 HAC-1987-0815）已完成数字化归档。\n\n需要说明的是，卷宗第 17 至 23 页存在大面积水渍和涂黑痕迹，无法通过常规手段恢复。第 28 页背面有一行手写批注，内容如下：\n\n「327 人离开，但名单上只有 326 个名字。」\n\n如需进一步核实，请联系档案室。\n\n—— 档案室',
+                unread: true
+            };
+            const M4 = {
+                id: 'm4',
+                sender: '未知发件人',
+                email: 'noreply@yunyin-1987.org',
+                subject: '你也在找答案吗？',
+                date: '2024-05-21 03:15',
+                preview: '不要相信档案室里的名单。第 28 个人，一直在看着。',
+                body: '不要相信档案室里的名单。\n\n327 人离开，但名单上只有 326 个名字。\n\n第 28 个人，一直在看着。\n\n中元子夜，渡口莫回头。\n\n—— 一个也在找答案的人',
+                unread: true
+            };
+            const M6 = {
+                id: 'm6',
+                sender: '未知发件人',
+                email: 'noreply@yunyin-1987.org',
+                subject: '【系统】此信将于世界终结时送达',
+                date: '9999-12-31 23:59',
+                preview: '如果你正在读这封信，说明时间已经走到了尽头。',
+                body: '如果你正在读这封信，说明时间已经走到了尽头。\n\n槐安村在 1987 年 7 月 15 日消失，又在今天的某个瞬间，被你重新想起。\n\n327 个人里，那第 28 个名字，从来就不是别人。\n\n中元子夜，渡口莫回头。\n\n—— 写于时间尽头的某个人',
+                unread: true
+            };
+
+            const mailData = {
+                inbox: [
+                    {
+                        id: 'm1',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '账号开通通知',
+                        date: '2024-03-01 09:12',
+                        preview: '您的邮件系统账号已开通，请妥善保管登录信息。',
+                        body: '您的邮件系统账号已开通。\n\n本系统用于研究所内部敏感资料传输，请勿将账号信息告知非授权人员。\n\n首次登录后，请确认您有权查阅「槐安村田野调查」相关档案。\n\n—— 云隐文化研究所 · 信息技术部'
+                    },
+                    {
+                        id: 'm2',
+                        sender: '沈墨',
+                        email: 'shenmo@yunyin-1987.org',
+                        subject: '槐安村第三轮调查：初步发现',
+                        date: '2024-03-18 23:47',
+                        preview: '村口石碑上刻的字和档案里不一样。我需要再核对一次。',
+                        body: '我已抵达槐安村旧址。\n\n村口石碑上刻的村名，与研究所档案里的写法存在出入。档案记录为「槐安村」，但石碑上隐约可见的字迹更像是「槐花镇」。\n\n另外，当地老人提到中元节前夜会有「河灯归位」的习俗。我打算明天夜里去河边看看。\n\n录音设备已经就位。\n\n沈墨\n2024.3.18',
+                        unread: true
+                    }
+                ],
+                sent: [],
+                drafts: [
+                    {
+                        id: 's1',
+                        sender: '我',
+                        recipient: 'archive@yunyin-1987.org',
+                        subject: '关于槐安村卷宗的调阅申请',
+                        date: '2024-04-01 10:22',
+                        preview: '申请调阅 HAC-1987-0815 卷宗全文，用于田野调查前期准备。',
+                        body: '档案室老师您好：\n\n我是本次槐安村田野调查组的成员，申请调阅《槐安村 1987-07-15 人口失踪事件》卷宗全文（编号 HAC-1987-0815）。\n\n本次调阅仅用于前期资料整理，不会外传。\n\n谢谢。'
+                    }
+                ],
+                trash: [
+                    {
+                        id: 't1',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：异常登录',
+                        date: '2024-05-19 02:33',
+                        preview: '您的账号于凌晨 02:31 发生异地登录，请确认是否本人操作。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-19 02:31 发生异地登录。\n\n登录 IP：192.168.[数据删除]\n登录地点：[数据删除]\n\n如非本人操作，请立即修改密码并联系信息技术部。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't2',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：登录地点异常',
+                        date: '2024-05-19 19:48',
+                        preview: '检测到账号于非常用地登录，IP 归属地无法确认。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-19 19:46 于非常用地登录，登录地点无法确认。\n\n登录 IP：45.13.[数据删除].[数据删除]\n登录地点：[数据删除]\n设备指纹：[数据删除]\n\n如非本人操作，请立即修改密码并联系信息技术部。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't3',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：多次登录失败',
+                        date: '2024-05-20 03:51',
+                        preview: '过去 1 小时内发生 11 次密码错误，已临时锁定。',
+                        body: '安全提醒：\n\n过去 1 小时内，您的账号发生 11 次登录密码错误，系统已临时锁定该账号 30 分钟。\n\n最后一次尝试来源 IP：0.0.0.0（来源异常，无法解析）\n尝试地点：[数据删除]\n\n若非本人操作，请尽快联系信息技术部核查。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't4',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：异常 IPv6 登录',
+                        date: '2024-05-21 23:18',
+                        preview: '检测到来自 IPv6 地址的登录，归属地超出常规范围。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-21 23:15 通过 IPv6 地址登录，该地址归属地超出常规范围。\n\n登录 IP：2001:db8:[数据删除]:[数据删除]:[数据删除]:[数据删除]\n登录地点：[数据删除]\n\n如非本人操作，请立即修改密码并联系信息技术部。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't5',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：登录行为异常',
+                        date: '2024-05-22 11:42',
+                        preview: '检测到来源 IP 格式异常，疑似非标准网络环境。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-22 11:40 发生登录，但来源 IP 格式异常，疑似来自非标准网络环境。\n\n登录 IP：617.254.[数据删除].[数据删除]\n登录地点：[数据删除]\n\n该地址无法通过常规地理位置解析，已记录为高风险来源。\n\n如非本人操作，请立即联系信息技术部。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't6',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：登录来源为本机',
+                        date: '2024-05-22 23:59',
+                        preview: '检测到来自您本机地址的登录，但此刻并无操作记录。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-22 23:57 发生登录，但来源 IP 解析为 127.0.0.1（本机回环地址）。\n\n系统记录显示，您此刻并未在设备上执行任何操作。\n\n登录地点：[数据删除]\n设备指纹：[数据删除]\n\n这意味着有人（或某段程序）正以「您自己」的身份，从您的机器内部登录这个账号。\n\n如非本人操作，请立即联系信息技术部。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't7',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：登录设备无法识别',
+                        date: '2024-05-23 02:14',
+                        preview: '本次登录的设备型号与指纹均无法匹配已知设备。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-23 02:11 完成登录，但本次登录所使用的设备无法被系统识别。\n\n登录设备：未知\n设备指纹：[数据删除]\n系统版本：[数据删除]\n\n该设备未在您的已授权设备列表中，且未留下任何可溯源的硬件信息。\n\n如非本人操作，请尽快修改密码并联系信息技术部。\n\n—— 系统管理员'
+                    },
+                    {
+                        id: 't8',
+                        sender: '系统管理员',
+                        email: 'admin@yunyin-1987.org',
+                        subject: '安全提醒：会话来源异常',
+                        date: '2024-05-23 04:44',
+                        preview: '检测到本次登录会话源自一封尚未发送的草稿邮件。',
+                        body: '安全提醒：\n\n您的账号于 2024-05-23 04:40 发生登录，但系统追踪到本次会话的来源，是一封「尚未发送」的草稿邮件。\n\n会话锚点：草稿箱 / 致沈墨\n收件人：shenmo@yunyin-1987.org\n\n该收件人当前不可达，会话却已建立。\n\n我们不建议您打开这封草稿。\n\n—— 系统管理员'
+                    }
+                ]
+            };
+
+            window.enterMail = function() {
+                const input = document.getElementById('username-input');
+                const error = document.getElementById('username-error');
+                const username = input.value.trim();
+
+                input.classList.remove('invalid');
+                error.textContent = '';
+
+                if (!username) {
+                    error.textContent = '请输入账号';
+                    input.classList.add('invalid');
+                    return;
+                }
+                if (!/^[a-zA-Z0-9]+$/.test(username)) {
+                    error.textContent = '账号只能包含英文大小写和数字';
+                    input.classList.add('invalid');
+                    return;
+                }
+                if (username.length < 4 || username.length > 16) {
+                    error.textContent = '账号长度需在 4-16 位之间';
+                    input.classList.add('invalid');
+                    return;
+                }
+
+                currentUser = username;
+                currentUserEmail = username + '@yunyin-1987.org';
+                try {
+                    sessionStorage.setItem(USERNAME_KEY, username);
+                } catch (e) {}
+                showMailApp();
+            };
+
+            window.logoutMail = function() {
+                try {
+                    sessionStorage.removeItem(USERNAME_KEY);
+                } catch (e) {}
+                location.reload();
+            };
+
+            function showMailApp() {
+                document.getElementById('username-overlay').classList.remove('show');
+                setTimeout(() => {
+                    document.getElementById('username-overlay').style.display = 'none';
+                    document.getElementById('mail-app').style.display = 'block';
+                    document.getElementById('display-username').textContent = currentUserEmail;
+                    renderFolder('inbox');
+                    updateInboxCount();
+                }, 300);
+            }
+
+            window.switchFolder = function(folder) {
+                currentFolder = folder;
+                document.querySelectorAll('.mail-folder').forEach(f => f.classList.remove('active'));
+                document.querySelector('.mail-folder[data-folder="' + folder + '"]').classList.add('active');
+                renderFolder(folder);
+                backToList();
+            };
+
+            function renderFolder(folder) {
+                const list = document.getElementById('mail-list');
+                const nameMap = { inbox: '收件箱', sent: '已发送', drafts: '草稿箱', trash: '垃圾箱' };
+                document.getElementById('folder-name').textContent = nameMap[folder];
+
+                let mails = mailData[folder] || [];
+
+                // 收件箱：未读优先，同状态下按时间从新到旧排列
+                if (folder === 'inbox') {
+                    mails = [...mails].sort((a, b) => {
+                        if (a.unread !== b.unread) return a.unread ? -1 : 1;
+                        return new Date(b.date).getTime() - new Date(a.date).getTime();
+                    });
+                }
+
+                document.getElementById('mail-total').textContent = '共 ' + mails.length + ' 封';
+
+                if (mails.length === 0) {
+                    list.innerHTML = '<div class="mail-empty">该文件夹暂无邮件</div>';
+                    return;
+                }
+
+                list.innerHTML = mails.map(m => `
+                    <div class="mail-item ${m.unread ? 'unread' : ''} ${m.failed ? 'failed' : ''}" onclick="openMail('${folder}', '${m.id}')">
+                        <div class="mail-row">
+                            <div class="mail-sender">${m.sender}</div>
+                            <div class="mail-date">${m.date}</div>
+                        </div>
+                        <div class="mail-subject">${m.unread ? '● ' : ''}${m.subject}</div>
+                        <div class="mail-preview">${m.preview}${m.failed ? ' · 发送失败' : ''}</div>
+                    </div>
+                `).join('');
+            }
+
+            window.openMail = function(folder, id) {
+                const m = mailData[folder].find(x => x.id === id);
+                if (!m) return;
+                m.unread = false;
+                updateInboxCount();
+
+                let metaHtml = '';
+                if (folder === 'inbox' || folder === 'trash') {
+                    metaHtml += `<div>发件人：${m.sender} &lt;${m.email}&gt;</div>`;
+                    metaHtml += `<div>收件人：${currentUserEmail}</div>`;
+                } else {
+                    metaHtml += `<div>发件人：${currentUserEmail}（我）</div>`;
+                    metaHtml += `<div>收件人：${m.recipient}</div>`;
+                }
+                metaHtml += `<div>时间：${m.date}</div>`;
+
+                let sendBtn = '';
+                if (folder === 'drafts') {
+                    sendBtn = `<button class="btn" style="margin-top: 16px;" onclick="sendDraft('${id}')">发送</button>`;
+                }
+
+                let failedNote = '';
+                if (m.failed) {
+                    failedNote = `<div class="mail-failed-note">⚠ 此邮件发送失败<br>收件人 shenmo@yunyin-1987.org 不可达，系统未找到该账号的在线状态。<br>重试无效。</div>`;
+                }
+
+                document.getElementById('mail-list').style.display = 'none';
+                document.getElementById('mail-detail').style.display = 'flex';
+                document.getElementById('detail-subject').textContent = m.subject;
+                document.getElementById('detail-meta').innerHTML = metaHtml;
+                document.getElementById('detail-body').innerHTML = escapeHtml(m.body).replace(/\[数据删除\]/g, '<span class="redacted">数据删除</span>') + failedNote + sendBtn;
+            };
+
+            window.backToList = function() {
+                document.getElementById('mail-list').style.display = 'block';
+                document.getElementById('mail-detail').style.display = 'none';
+                renderFolder(currentFolder);
+            };
+
+            window.sendDraft = function(id) {
+                const idx = mailData.drafts.findIndex(x => x.id === id);
+                if (idx === -1) return;
+                const mail = mailData.drafts[idx];
+                mailData.drafts.splice(idx, 1);
+
+                const now = new Date();
+                const pad = n => String(n).padStart(2, '0');
+
+                if (id === 's1') {
+                    // 调阅申请：发送成功，等待档案室回复
+                    mailData.sent.unshift(mail);
+                    backToList();
+                    switchFolder('sent');
+                    showToast('邮件已发送至 archive@yunyin-1987.org，正在等待档案室回复……');
+
+                    // 一封邮件进入收件箱的统一处理
+                    const arrive = (mailObj, toastMsg) => {
+                        mailData.inbox.unshift(mailObj);
+                        updateInboxCount();
+                        if (currentFolder === 'inbox') renderFolder('inbox');
+                        showToast(toastMsg);
+                    };
+
+                    setTimeout(() => {
+                        // 切回收件箱，让玩家看到后续邮件依次到达
+                        if (currentFolder !== 'inbox') switchFolder('inbox');
+                        // 档案室回复：管理员账号与密码
+                        arrive({
+                            id: 'm5',
+                            sender: '档案室',
+                            email: 'archive@yunyin-1987.org',
+                            subject: 'RE: 关于槐安村卷宗的调阅申请',
+                            date: '2024-04-01 10:25',
+                            preview: '申请已通过。访问档案库需管理员账号，凭证如下。',
+                            body: '您的调阅申请已收到。\n\n经审核，HAC-1987-0815 卷宗属研究所限制级档案，普通研究员账号无法直接在线浏览全文。如需访问档案库，请使用管理员通道登录。\n\n管理员通道入口：返回研究所首页 → 内部系统登录\n\n所需凭证如下：\n  账号：yunyin\n  密码：19870815\n\n（该账号仅用于档案库登录，请勿外传。）\n\n—— 云隐文化研究所 · 档案室',
+                            unread: true
+                        }, '收件箱收到新邮件：RE: 关于槐安村卷宗的调阅申请');
+
+                        // 4 月 2 日及之后的邮件，在回复返回后按时间顺序依次出现，间隔约 1 秒
+                        setTimeout(() => arrive(M3, '收件箱收到新邮件：关于 1987-07-15 事件卷宗的补充说明'), 1000);
+                        setTimeout(() => arrive(M4, '收件箱收到新邮件：你也在找答案吗？'), 2000);
+                        setTimeout(() => arrive(M6, '收件箱收到一封来源异常的邮件……'), 3000);
+
+                        // 全部到达后，引导玩家给沈墨写信
+                        setTimeout(showShenmoPrompt, 4200);
+                    }, 2600);
+                } else if (id === 'd1') {
+                    // 致沈墨：发送失败（沈墨已不可达）
+                    mail.failed = true;
+                    mail.date = '2024-05-22 ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+                    mailData.sent.unshift(mail);
+                    backToList();
+                    switchFolder('sent');
+                    showToast('邮件发送失败：收件人 shenmo@yunyin-1987.org 不可达');
+                }
+            };
+
+            function showShenmoPrompt() {
+                const ov = document.getElementById('shenmo-prompt-overlay');
+                ov.style.display = 'flex';
+                requestAnimationFrame(() => ov.classList.add('show'));
+            }
+
+            window.closeShenmoPrompt = function() {
+                const ov = document.getElementById('shenmo-prompt-overlay');
+                ov.classList.remove('show');
+                setTimeout(() => { ov.style.display = 'none'; }, 500);
+                // 将致沈墨邮件加入草稿箱
+                if (!mailData.drafts.find(x => x.id === 'd1')) {
+                    mailData.drafts.push(SHENMO_DRAFT);
+                    if (currentFolder === 'drafts') renderFolder('drafts');
+                }
+            };
+
+
+            function showToast(msg) {
+                const t = document.getElementById('mail-toast');
+                t.textContent = msg;
+                t.classList.add('show');
+                clearTimeout(showToast._timer);
+                showToast._timer = setTimeout(() => {
+                    t.classList.remove('show');
+                }, 4200);
+            }
+
+            function updateInboxCount() {
+                const unread = mailData.inbox.filter(m => m.unread).length;
+                const badge = document.getElementById('inbox-count');
+                badge.textContent = unread;
+                badge.style.display = unread > 0 ? 'inline-block' : 'none';
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // 回车提交
+            document.getElementById('username-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') enterMail();
+            });
+
+            // 页面加载时检查是否已登录
+            document.addEventListener('DOMContentLoaded', function() {
+                try {
+                    const saved = sessionStorage.getItem(USERNAME_KEY);
+                    if (saved && /^[a-zA-Z0-9]{4,16}$/.test(saved)) {
+                        currentUser = saved;
+                        currentUserEmail = saved + '@yunyin-1987.org';
+                        showMailApp();
+                    }
+                } catch (e) {}
+            });
+        })();
+    </script>
+</body>
+</html>
